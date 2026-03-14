@@ -1,125 +1,1471 @@
 /* ==========================================================================
-   IMPORTACIÓN DE FUENTES (Debe ir arriba de todo)
+   IMPORTACIÓN Y VARIABLES
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
-/* ==========================================================================
-   1. VARIABLES Y CONFIGURACIÓN (:root)
-   ========================================================================== */
 :root {
-    /* --- Colores --- */
-    --primary-purple: #9b34c2;
-    --primary-purple-dark: #7a289a;
-    --secondary-mint: #d9ede6;
-    --accent-green: #a2d2c1;
-    --bg-light-purple: #f3e8f9;
-    --white: #ffffff;
-    --text-main: #1a1e23;
-    --text-muted: #6c757d;
+    /* Paleta de Colores */
+    --P100: #D68BEB; --P200: #C151E1; --P300: #A623CB; --P400: #8E1EAE; --P500: #6B1783; --P600: #59136D; --P700: #470F57;
+    --S100: #F9DBFC; --S200: #F7CFFB; --S300: #F2B6F9; --S400: #EE9EF7; --S500: #DE40EF; --S600: #AA0FBB; --S700: #7F0C8C;
+    --T100: #F2F9F8; --T200: #E4F4F1; --T300: #D6EFE9; --T400: #C9E9E2; --T500: #9DD7CA; --T600: #48B099; --T700: #368473;
+    --B100: #F6F5F7; --B200: #EDEAEE; --B300: #E4E0E6; --B400: #DBD5DD; --B500: #836F89; --B600: #625367; --B700: #413745;
 
-    /* --- Tipografía --- */
+    /* Tipografía Standard (Desktop) */
     --font-family: 'Ubuntu', sans-serif;
-
-    /* --- Bordes y Espaciado --- */
+    --fs-h1: 2.986rem; --fs-h2: 2.488rem; --fs-h3: 2.074rem; --fs-h4: 1.728rem;
+    --fs-h5: 1.44rem;  --fs-h6: 1.2rem;    --fs-p: 1rem;      --fs-small: 0.833rem;
+    --fw-regular: 400; --fw-medium: 500; --fw-bold: 700;
+    
+    /* Configuración Visual */
     --radius-lg: 40px;
     --radius-md: 20px;
-    --nav-height: 80px;
+}
+
+@media (max-width: 768px) {
+    :root {
+        /* Escala un paso abajo para móviles */
+        --fs-h1: 2.488rem; --fs-h2: 2.074rem; --fs-h3: 1.728rem; --fs-h4: 1.44rem;
+        --fs-h5: 1.2rem;   --fs-h6: 1rem;     --fs-p: 0.833rem;
+    }
+
+    h1,h2,h3,h4,h5,h6,p{
+        text-align: center !important;
+        margin-left: auto;
+        margin-right: auto; 
+    }
 }
 
 /* ==========================================================================
-   2. ESTILOS BASE Y RESET
+   RESET Y BASE
    ========================================================================== */
 *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* Forzamos Ubuntu en absolutamente todo */
+    margin: 0; padding: 0; box-sizing: border-box;
     font-family: var(--font-family) !important;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    font-size: 16px;
+    background-color: var(--B100);
+    color: var(--B700);
     line-height: 1.6;
-    color: var(--text-main);
-    background-color: var(--white);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
 }
 
-/* --- Títulos --- */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-}
+h1, .h1-design { font-size: var(--fs-h1); font-weight: var(--fw-bold); color: var(--P400); }
+h2, .h2-design { font-size: var(--fs-h2); font-weight: var(--fw-bold); color: var(--P400); }
+p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
 
-h1 { font-size: 3rem; letter-spacing: -0.02em; }
-h2 { font-size: 2.4rem; }
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
 
-/* --- Navegación --- */
 .custom-navbar {
-    padding-top: 20px;
     background-color: transparent !important;
+    backdrop-filter: none;
 }
 
-.navbar-brand-custom {
-    background-color: var(--secondary-mint);
-    padding: 12px 28px;
-    border-radius: var(--radius-lg);
-    font-weight: 700; 
-    color: var(--text-main) !important;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-}
-
+.navbar-brand-custom, 
 .navbar-collapse-custom {
-    background-color: var(--secondary-mint);
+    /* Usamos un color muy clarito y transparente */
+    background-color: rgba(202, 232, 225, 0.7) !important;
+    
+    /* El efecto de desenfoque */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Un borde sutil para que se note el límite del vidrio */
+    background-color: rgba(202, 232, 225, 0.7) !important;
+    
+    padding: 10px 10px;
     border-radius: var(--radius-lg);
-    padding: 6px 6px 6px 25px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    font-weight: var(--fw-bold);
+    color: var(--B700) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.nav-link {
-    color: var(--text-main) !important;
-    font-weight: 500; /* Peso Ubuntu Medium */
-    margin-right: 20px;
-    font-size: 0.95rem;
-    transition: opacity 0.2s;
+
+/* Ajuste del contenedor de la marca */
+.navbar-brand-custom {
+    height: 60px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0; /* Limpiamos paddings que puedan desviar el texto */
+    text-decoration: none; /* Quita subrayados del enlace */
+}
+
+/* El texto dentro */
+.texto-titulo {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1;
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+}
+
+/* --- AJUSTES PARA MÓVILES (MENOS DE 768px) --- */
+@media (max-width: 768px) {
+    .navbar-brand-custom {
+        width: 160px; /* Reducimos el ancho del contenedor en móvil */
+        height: 50px;
+    }
+
+    .texto-titulo {
+        font-size: 1rem; /* Más pequeño en móvil */
+    }
+    
+    /* El botón burger también un poco más pequeño en móvil si quieres */
+    .navbar-toggler {
+        padding: 8px;
+        border-radius: 12px;
+    }
+}
+
+.nav-link { 
+    color: var(--B700) !important; 
+    font-weight: var(--fw-medium); 
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: -2px;
+    margin-bottom: -2px;
 }
 
 .btn-presupuesto {
-    background-color: var(--accent-green) !important;
+    background-color: var(--T500) !important;
     border-radius: var(--radius-lg);
-    color: var(--text-main) !important;
-    font-weight: 700;
+    font-weight: var(--fw-bold);
     padding: 10px 25px !important;
     border: none;
+    transition: transform 0.2s;
 }
+.btn-presupuesto:hover { transform: scale(1.05); }
 
-/* --- Responsive --- */
-@media (max-width: 991.98px) {
-    .navbar-collapse-custom {
-        border-radius: var(--radius-md);
-        margin-top: 15px;
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .nav-link { margin-bottom: 15px; margin-right: 0; }
-    .btn-presupuesto { width: 100%; text-align: center; }
-    h1 { font-size: 2.2rem; }
-}
 
+/* Estilo del botón hamburguesa */
 .navbar-toggler {
+    border: none; /* Quitamos el borde por defecto */
+    background-color: rgba(202, 232, 225, 0.8) !important; /* Tu color menta */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    padding: 10px;
+    border-radius: 15px; /* Bordes bastante redondeados */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 2px var(--T500);
+    outline: none;
+}
+
+@media (min-width: 992px) {
+    .navbar-collapse-custom {
+        width: auto;
+        flex-grow: 0;
+    }
+    .navbar-collapse {
+        margin-top: 15px; /* Espacio para que no pegue con el botón burger */
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand-custom {
+        width: 160px; /* Reducimos el ancho del contenedor en móvil */
+        height: 50px;
+    }
+
+    .texto-titulo {
+        font-size: 1rem; /* Más pequeño en móvil */
+    }
+    
+    /* El botón burger también un poco más pequeño en móvil si quieres */
+    .navbar-toggler {
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .shape-3 svg {
+        width: 80px; /* Un poco más pequeño en móvil */
+        height: auto;
+    }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero { 
+    margin-top: 4rem; 
+    margin-bottom: 3rem;
+    padding-bottom: 7rem;
+    min-height: 70vh; 
+    display: flex; 
+    align-items: center;
+    position: relative;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 10; /* Un número mayor que el de las formas */
+}
+
+.hero-title { margin-bottom: 1.5rem; }
+.hero-description { margin-bottom: 2.5rem; max-width: 90%; }
+
+.columna-hero-1{
+    background: rgba(255, 255, 255, 0.15);
+    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    border-radius: 90px;
+    
+    box-shadow: 0 0 60px 10px rgba(255, 255, 255, 0.15);
+    
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    padding: 40px; 
+    transition: box-shadow 0.3s ease; /* Suaviza cambios */
+}
+
+
+/* Formas de Fondo */
+.hero-shapes {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden; /* Evita que las formas grandes creen scroll lateral */
+}
+
+.shape {
+    position: absolute;
+    z-index: -1;
+    display: flex; /* Asegura centrado del contenido (SVG) */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease; /* Suaviza cambios al redimensionar */
+}
+
+.shape-1 {
+    top: 10%;
+    left: 80%;
+    animation: float-hexagon 8s ease-in-out infinite;
+}
+
+.shape-hexagon {
+    width: 232px;
+    height: 232px;
+}
+
+.shape-hexagon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.shape-2{
+    top: 40%;
+    left: 5%;
+}
+
+.shape-circle svg{
+    animation: orbit-pulse 10s linear infinite;
+}
+
+/* --- Animacion Circulo --- */
+@keyframes orbit-pulse {
+    0% {
+        transform: rotate(0deg) scale(1) translateX(0);
+    }
+    33% {
+        transform: rotate(120deg) scale(1.1) translateX(10px);
+    }
+    66% {
+        transform: rotate(240deg) scale(0.9) translateX(-10px);
+    }
+    100% {
+        transform: rotate(360deg) scale(1) translateX(0);
+    }
+}
+
+
+/* --- Hexagono --- */
+@keyframes float-hexagon {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+
+/* Botones */
+.btn-hero {
+    border-radius: var(--radius-md);
+    padding: 12px 20px;
+    font-weight: var(--fw-medium);
     border: none;
-    background-color: var(--secondary-mint);
+    transition: all 0.3s ease;
+}
+
+#btn-hero-1 { 
+    background-color: var(--S500); 
+    color: white; }
+
+#btn-hero-2 {
+    color: var(--S500); 
+    border: 1px solid; 
+    border-color: var(--S500);
+    background-color: white;
+}
+#btn-hero-3 { 
+    background-color: var(--S500);
+    color: white;
+}
+
+.btn-hero:hover { 
+    transform: translateY(-3px); 
+    filter: brightness(1.1); 
+}
+
+/* Imagen */
+#imagen-hero {
+    max-width: 350px;
+    background: rgba(255, 255, 255, 0.2); /* Color blanco muy transparente */
+    backdrop-filter: blur(5px); /* Desenfoca lo que hay DETRÁS de la imagen */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 250px;
+    padding: 10px;
+}
+
+@media (max-width: 320px) {
+    .navbar-brand-custom {
+        width: 140px;
+    }
+    .texto-titulo {
+        font-size: 0.9rem;
+    }
+}
+
+/* --- 2. MÓVILES (Smartphone estándar < 768px) --- */
+@media (max-width: 767.98px) {
+    /* Navbar */
+    .navbar-brand-custom {
+        width: 160px; /* Título más pequeño */
+        height: 50px;
+    }
+    .texto-titulo {
+        font-size: 1.1rem;
+    }
+    
+    /* Botón Hamburguesa */
+    .navbar-toggler {
+        padding: 8px;
+        border-radius: 12px;
+        transform: scale(0.9); /* Un toque más compacto */
+    }
+
+    /* Formas Geométricas */
+    .shape-hexagon {
+        width: 130px; /* El hexágono se achica para no tapar todo */
+        height: 130px;
+
+        top: 50%;
+        left: 60%;
+    }
+
+    .shape-circle{
+        width: 230px; /* El hexágono se achica para no tapar todo */
+        height: 230px;
+
+        top: 70%;
+        left: 10%;
+    }
+
+    .shape-3 svg {
+        width: 70px; /* El círculo de la esquina superior */
+        height: auto;
+    }
+
+    /* Hero */
+    .columna-hero-1 {
+        border-radius: 40px; /* Menos curva para aprovechar espacio */
+        padding: 20px;
+        box-shadow: 0 0 30px 5px rgba(255, 255, 255, 0.15);
+    }
+    
+    #imagen-hero {
+        max-width: 280px; /* Imagen más pequeña para que quepa el texto */
+    }
+
+    .hero-buttons {
+        justify-content: center; /* Centra los botones en la pantalla */
+        width: 100%;
+        flex-wrap: nowrap; /* Evita que el segundo botón baje */
+    }
+
+    .hero-buttons .btn {
+        /* Ajustamos el tamaño para que quepan ambos */
+        flex: 1; /* Hace que ambos botones midan lo mismo */
+        padding: 10px 15px !important;
+        font-size: 0.9rem; /* Achicamos un poco la letra */
+        white-space: nowrap; /* Evita que el texto salte de línea */
+        min-width: fit-content;
+    }
+}
+
+/* --- 3. TABLETS (Portrait y Landscape 768px a 991px) --- */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .navbar-brand-custom {
+        width: 180px;
+    }
+    .texto-titulo {
+        font-size: 1.2rem;
+    }
+    
+    .navbar-collapse-custom {
+        margin-top: 15px; /* Separación cuando el menú cae */
+        padding: 15px;
+    }
+}
+
+/* --- 4. DESKTOP (Laptops y Monitores > 992px) --- */
+@media (min-width: 992px) {
+    /* Aquí forzamos que el menú NO sea 100% ancho */
+    .navbar-collapse-custom {
+        width: auto;
+        flex-grow: 0;
+        display: flex;
+        gap: 10px; /* Espacio entre botones del menú */
+    }
+    
+    /* El título vuelve a su tamaño original */
+    .texto-titulo {
+        font-size: 1.25rem;
+    }
+}
+
+/* --- 5. PANTALLAS MUY GRANDES (> 1400px) --- */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* ==========================================================================
+   Seccion Motivos
+   ========================================================================== */
+
+.motivos{
+    text-align: center !important;
+    padding-top: 12rem;
+    padding-bottom: 8.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    
+
+    background: linear-gradient(0deg, var(--S100) 0%, rgba(255, 255, 255, 0.15) 100%);
+    
+}
+
+.row-bloques{
+    margin-top: 7rem;
+}
+
+.texto-motivos{
+    margin-top: 1.5rem;
+    font-size: var(--fs-h6);
+}
+
+.titulo-motivos{
+    font-size: var(--fs-h2);
+}
+
+/* --- TABLETS (Hasta 991px) --- */
+@media (max-width: 991.98px) {
+    .motivos {
+        padding-top: 8rem; /* Reducimos el espacio superior */
+        padding-bottom: 6rem;
+    }
+
+    .row-bloques {
+        margin-top: 5rem; /* Acortamos la distancia entre el título y los bloques */
+    }
+}
+
+/* --- MÓVILES (Hasta 767px) --- */
+@media (max-width: 767.98px) {
+    .motivos {
+        padding-top: 5rem; /* Espaciado mucho más compacto para celular */
+        padding-bottom: 4rem;
+        padding-left: 20px; /* Añadimos seguridad a los lados */
+        padding-right: 20px;
+    }
+
+    .row-bloques {
+        margin-top: 3.5rem;
+    }
+    
+    /* Centrado forzado de los elementos internos en móviles */
+    .row-bloques > div {
+        margin-bottom: 2.5rem; /* Espacio entre los bloques cuando se apilan */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* --- MÓVILES EXTRA PEQUEÑOS (Hasta 480px) --- */
+@media (max-width: 479.98px) {
+    .motivos {
+        padding-top: 4rem;
+    }
+}
+
+/* ==========================================================================
+   Seccion Soluciones (Acordeón Horizontal)
+   ========================================================================== */
+
+.soluciones-container {
+    padding: 80px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--B100);
+     text-align: center !important;
+}
+
+.section-acordeon {
+    max-width: 1080px;
+    width: 100%;
+}
+
+.sub-acordeon {
+    text-align: center;
+    font-size: var(--fs-small);
+    color: var(--B500);
+    margin-bottom: 64px;
+}
+
+/* ── ACORDEÓN HORIZONTAL ── */
+.accordion {
+    display: flex;
+    gap: 12px;
+    height: 440px;
+    width: 100%;
+}
+
+.panel {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: flex 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+    flex: 1;
+    min-width: 72px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.panel.open { 
+    flex: 4.5; 
+}
+
+/* Panel 1: Púrpura medio (Primario base) */
+.panel:nth-child(1) { 
+    background: linear-gradient(160deg, var(--P400) 0%, var(--S300) 100%); 
+}
+
+/* Panel 2: Rosa vibrante medio (Secundario base) */
+.panel:nth-child(2) { 
+    background: linear-gradient(160deg, var(--P400) 0%, var(--P400) 100%); 
+}
+
+/* Panel 3: Transición de Púrpura a Rosa */
+.panel:nth-child(3) { 
+    background: linear-gradient(160deg, var(--P400) 0%, var(--S300) 100%); 
+}
+
+/* Panel 4: Púrpura suave a Rosa intenso */
+.panel:nth-child(4) { 
+    background: linear-gradient(160deg, var(--P300) 0%, var(--S400) 100%); 
+}
+
+/* Número/Texto vertical */
+.panel-num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    font-family: var(--font-family);
+    font-size: 0.7rem;
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    white-space: nowrap;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.panel.open .panel-num { opacity: 0; }
+
+/* Contenido interior */
+.panel-content {
+    position: absolute;
+    inset: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.4s 0.15s;
+    pointer-events: none;
+    min-width: 320px;
+}
+.panel.open .panel-content {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.panel-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+}
+
+.panel-title {
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-bold);
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.panel-desc {
+    font-size: var(--fs-p);
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    max-width: 340px;
+}
+
+/* Iconos de Check */
+.feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--fs-small);
+    color: white;
+    margin-bottom: 8px;
+}
+.feat::before {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center;
+    background-size: 10px;
+    flex-shrink: 0;
+}
+
+.panel-cta {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    color: var(--B700) !important;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-bold);
+    padding: 10px 20px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s;
+    width: fit-content;
+    margin-top: 20px;
+}
+.panel-cta:hover { transform: scale(1.05); }
+
+/* El círculo de fondo (decoración) */
+.panel::before {
+    content: '';
+    position: absolute;
+    /* Empezamos con un círculo mediano */
+    width: 200px; 
+    height: 200px;
+    border-radius: 50%;
+    /* Color blanco muy sutil */
+    background: rgba(255, 255, 255, 0.1); 
+    
+    /* Lo posicionamos en la esquina superior derecha */
+    top: -50px; 
+    right: -50px;
+    
+    /* La magia de la animación */
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.18, 1), 
+                background 0.5s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Cuando el panel se abre, el círculo se agranda */
+.panel.open::before {
+    transform: scale(2.5); /* Se expande más del doble */
+    background: rgba(255, 255, 255, 0.15); /* Gana un poquito de brillo */
+}
+
+/* Añadimos un segundo círculo para más profundidad (opcional) */
+.panel::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    bottom: -20px;
+    left: -20px;
+    transition: transform 0.6s ease;
+}
+
+.panel.open::after {
+    transform: scale(1.5);
+}
+
+/* RESPONSIVE ACORDEON */
+@media (max-width: 768px) {
+    .accordion {
+        flex-direction: column;
+        height: 700px; /* Dale una altura fija al contenedor para que el flex funcione */
+        gap: 8px;
+    }
+
+    .panel { 
+        min-width: unset; 
+        flex: 1; /* Todos ocupan el mismo espacio cerrados */
+        transition: flex 0.7s cubic-bezier(0.77, 0, 0.18, 1); /* Aseguramos que la curva sea suave */
+    }
+
+    .panel.open { 
+        flex: 10; /* El panel abierto "estira" su parte del flex, comprimiendo a los demás */
+        min-height: unset; /* Quitamos el min-height para que no salte */
+    }
+
+    .panel-num { 
+        /* Mantén la rotación pero sutil, o quítala si prefieres el texto horizontal */
+        transform: translate(-50%, -50%) rotate(0deg); 
+        top: 40px; /* Lo subimos para que no choque con el contenido al abrirse */
+    }
+
+    .panel-content { 
+        padding: 40px 20px;
+        /* Evita que el contenido aparezca antes de que el panel termine de crecer */
+        transition: opacity 0.5s ease-in-out 0.2s; 
+    }
+}
+
+
+/* --- SECCIÓN CASOS DE ÉXITO --- */
+.casos-exito-section {
+    padding: 100px 0;
+    background-color: var(--B100);
+
+    position: relative;
+    overflow: hidden; /* Importante para que las líneas no generen scroll horizontal */
+    
+    /* Imagen de fondo SVG */
+    background-image: url("data:image/svg+xml,%3Csvg width='1440' height='1074' viewBox='0 0 1440 1074' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-135.933 809.636C-135.933 809.636 68.1132 767.52 234.593 689.889C401.073 612.258 454.385 454.208 630.185 371.721' stroke='%23F2F9F8' stroke-width='20'/%3E%3Cpath d='M1458.47 66.7572C1458.47 66.7572 1295.05 195.994 1128.57 273.625C962.091 351.256 806.75 290.502 630.558 372.151' stroke='%23F2F9F8' stroke-width='20'/%3E%3Cpath d='M-84.9546 920.077C-84.9546 920.077 119.091 877.961 285.571 800.33C452.051 722.699 505.363 564.649 681.163 482.161' stroke='%23E4F4F1' stroke-width='10'/%3E%3Cpath d='M1509.45 177.198C1509.45 177.198 1346.03 306.434 1179.55 384.065C1013.07 461.696 857.728 400.943 681.537 482.591' stroke='%23E4F4F1' stroke-width='10'/%3E%3Cpath d='M-33.6015 1029.64C-33.6015 1029.64 170.444 987.523 336.924 909.892C503.404 832.261 556.716 674.211 732.516 591.723' stroke='%23D6EFE9' stroke-width='20'/%3E%3Cpath d='M1560.8 286.76C1560.8 286.76 1397.38 415.997 1230.9 493.628C1064.42 571.258 909.081 510.505 732.89 592.154' stroke='%23D6EFE9' stroke-width='20'/%3E%3C/svg%3E");
+    
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.casos-exito-section h6{
+    font-size: var(--fs-h6);
+}
+.casos-exito-section h2{
+    font-size: var(--fs-h2);
+}
+
+.casos-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+/* Aseguramos que el contenido esté por encima del fondo */
+.casos-exito-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Forzar el tamaño exacto del Card */
+.casos-exito-section .caso-card {
+    display: flex;
+    width: 1080px; /* 540 + 540 */
+    height: 360px;
+    background: transparent;
+    border: none;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.08));
+}
+
+/* Forzar tamaño de las cajas internas */
+.casos-exito-section .caso-box {
+    width: 540px !important;
+    height: 360px !important;
+    flex: 0 0 540px !important;
+}
+
+.casos-exito-section .caso-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Manejo de bordes redondeados según posición */
+.casos-exito-section .caso-card:not(.flex-row-reverse) .caso-imagen-container { border-radius: 30px 0 0 30px; overflow: hidden; }
+.casos-exito-section .caso-card:not(.flex-row-reverse) .caso-contenido { border-radius: 0 30px 30px 0; }
+
+.casos-exito-section .caso-card.flex-row-reverse .caso-imagen-container { border-radius: 0 30px 30px 0; overflow: hidden; }
+.casos-exito-section .caso-card.flex-row-reverse .caso-contenido { border-radius: 30px 0 0 30px; }
+
+/* Contenido e Info */
+.casos-exito-section .caso-contenido {
+    padding: 40px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.casos-exito-section .white-bg { background-color: #ffffff; }
+.casos-exito-section .gradient-bg { background: linear-gradient(135deg, var(--P400) 0%, var(--P200) 100%); }
+
+/* Badges y Stats */
+.casos-exito-section .badge-caso {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.casos-exito-section .badge-teal { background-color: var(--T100); color: var(--T700); }
+.casos-exito-section .badge-white { background-color: rgba(255,255,255,0.2); color: #fff; }
+
+.casos-exito-section .stat-mini {
+    background: var(--T100);
+    padding: 10px;
     border-radius: 12px;
-    padding: 8px;
+    text-align: center;
+}
+
+.casos-exito-section .stat-mini-white {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+}
+
+.casos-exito-section .stat-mini strong, .casos-exito-section .stat-mini-white strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.casos-exito-section .stat-mini span, .casos-exito-section .stat-mini-white span {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+/* RESPONSIVE */
+/* ==========================================================================
+   RESPONSIVE OPTIMIZADO - CASOS DE ÉXITO
+   ========================================================================== */
+
+/* 1. Tablets y Laptops pequeñas (Evita que el diseño de 1080px se desborde) */
+@media (max-width: 1200px) {
+    .casos-exito-section .caso-card {
+        width: 900px; /* Reducción proporcional */
+        height: 300px;
+    }
+    .casos-exito-section .caso-box {
+        width: 450px !important;
+        height: 300px !important;
+        flex: 0 0 450px !important;
+    }
+    .casos-exito-section .caso-contenido {
+        padding: 30px !important;
+    }
+    .casos-exito-section .stat-mini strong {
+        font-size: 1rem;
+    }
+}
+
+/* 2. iPads y tablets verticales (Pasamos a diseño vertical apilado) */
+@media (max-width: 992px) {
+    .casos-exito-section {
+        padding: 60px 0;
+    }
+    .casos-exito-section .caso-card {
+        flex-direction: column !important; /* Forzamos apilado */
+        width: 100%;
+        max-width: 540px; /* Límite de tu diseño original */
+        height: auto;
+    }
+    .casos-exito-section .caso-box {
+        width: 100% !important;
+        height: 320px !important; /* Un poco más bajo para no ser tan alto en móvil */
+        flex: unset !important;
+        border-radius: 24px !important; /* Redondeamos todas las esquinas */
+    }
+    .casos-exito-section .caso-contenido {
+        margin-top: -30px; /* Efecto de solapamiento visual */
+        z-index: 2;
+        padding: 40px 30px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .casos-wrapper {
+        gap: 60px; /* Más espacio entre tarjetas apiladas */
+    }
+}
+
+/* 3. Móviles (Ajustes de texto y espaciado) */
+@media (max-width: 576px) {
+    .casos-exito-section .caso-box {
+        height: 280px !important; /* Imagen más pequeña en móviles */
+    }
+    .casos-exito-section .caso-contenido {
+        padding: 30px 20px !important;
+    }
+    .casos-exito-section .stat-mini strong {
+        font-size: 0.9rem;
+    }
+    .display-4 {
+        font-size: 2.2rem; /* Título de sección más acorde a móvil */
+    }
+}
+
+/* ==========================================================================
+   Carrucel TikTok
+   ==========================================================================
+*/
+
+.tiktok-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tiktok-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 20px 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ocultar barra de scroll */
+.tiktok-track::-webkit-scrollbar { display: none; }
+
+.tiktok-card {
+    flex: 0 0 calc(33.333% - 14px); /* 3 videos en desktop */
+    aspect-ratio: 9 / 16;
+    border-radius: 20px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    transition: all 0.4s ease;
+    border: 2px solid var(--P200);
+    position: relative;
+}
+
+/* Los que no están en el centro se ven más opacos */
+.tiktok-card:not(.is-active) {
+    transform: scale(0.9);
+    opacity: 0.5;
+    filter: blur(1px);
+}
+
+.tk-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Botones Circulares */
+.nav-btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: var(--P200);
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.nav-btn.prev { left: -60px; }
+.nav-btn.next { right: -60px; }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .tiktok-card { flex: 0 0 70%; } /* En tablet se ve el central y asoman los costados */
+    .nav-btn { display: none; } /* En móvil usamos el dedo */
+}
+
+@media (max-width: 576px) {
+    .tiktok-card { flex: 0 0 85%; } /* En móvil casi pantalla completa */
+}
+
+.ig-modern-badge {
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 24px;
+    background-color: #ffffff;
+    border: 1.5px solid var(--P100);
+    border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ig-modern-badge .ig-handle {
+    color: var(--P600);
+    font-size: 0.95rem;
+    font-weight: 600;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.ig-modern-badge .ig-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    z-index: 2;
+    transition: filter 0.3s ease;
+}
+
+/* --- ESTADO HOVER --- */
+
+.ig-modern-badge:hover {
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(225, 48, 108, 0.3);
+    /* Degradado oficial de Instagram */
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* El texto pasa a blanco */
+.ig-modern-badge:hover .ig-handle {
+    color: #ffffff;
+}
+
+/* El icono pasa a blanco total usando filtros */
+.ig-modern-badge:hover .ig-logo {
+    filter: brightness(0) invert(1);
+}
+
+/* Opcional: un ligero brillo al pasar el mouse */
+.ig-modern-badge::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.1);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s;
+}
+
+.ig-modern-badge:hover::after {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Seccion Planes
+   ==========================================================================
+*/
+
+.planes-section {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--B100);
+}
+
+.relative-content { position: relative; z-index: 5; }
+
+/* --- CONTENEDOR DE TARJETAS --- */
+.planes-stack-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    perspective: 1000px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.plan-card-wrapper {
+    flex: 1;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+}
+
+/* --- ESTILO DE TARJETAS (MÁS LARGAS) --- */
+.plan-card {
+    padding: 50px 35px;
+    border-radius: 35px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 580px; /* Tarjetas más largas */
+    transition: all 0.4s ease;
+}
+
+.plan-glass {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid #EE9EF7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.plan-glass.border-mint { border-color: #C9E9E2; }
+
+/* TARJETA MORADA (MÁS GRANDE) */
+.plan-featured {
+    background: #8E1EAE;
+    color: white;
+    transform: scale(1.08); /* Jerarquía superior */
+    border: none;
+    box-shadow: 0 20px 50px rgba(142, 30, 174, 0.25);
+    z-index: 2;
+}
+
+/* --- ELEMENTOS INTERNOS --- */
+.plan-features { text-align: left; margin: 30px 0; }
+.plan-features li {
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.plan-features i { color: #8E1EAE; font-size: 1.2rem; }
+.featured-list i { color: #4CC9B0; } /* Check menta en tarjeta morada */
+
+.btn-primary-glass { background: #EE9EF7; color: white; border: none; padding: 14px; border-radius: 18px; font-weight: 600; }
+.btn-light-featured { background: white; color: #8E1EAE; border: none; padding: 14px; border-radius: 18px; font-weight: 700; }
+.btn-mint { background: #4CC9B0; color: white; border: none; padding: 14px; border-radius: 18px; font-weight: 600; }
+
+/* --- RESPONSIVE STACK (MÓVIL) --- */
+@media (max-width: 991px) {
+    .planes-stack-container {
+        height: 700px;
+        position: relative;
+        margin-top: 80px;
+        width: 100%;
+    }
+
+    .plan-card-wrapper {
+        position: absolute;
+        width: 85%;
+        max-width: 320px;
+        left: 50%;
+        top: 0;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efecto elástico suave */
+    }
+
+    /* --- ESTADO: TARJETA AL FRENTE (Cualquiera) --- */
+    .plan-card-wrapper.active {
+        transform: translateX(-50%) translateY(0) rotate(0) scale(1.05);
+        z-index: 20 !important;
+        opacity: 1;
+    }
+
+    /* --- ESTADO: TARJETAS ATRÁS (Inactivas) --- */
+    
+    /* 1. Si la de la IZQUIERDA está atrás */
+    .plan-card-wrapper:nth-child(1):not(.active) {
+        transform: translateX(-95%) translateY(40px) rotate(-10deg) scale(0.85);
+        z-index: 1;
+        opacity: 0.8;
+    }
+
+    /* 2. Si la de la DERECHA está atrás */
+    .plan-card-wrapper:nth-child(3):not(.active) {
+        transform: translateX(-5%) translateY(40px) rotate(10deg) scale(0.85);
+        z-index: 1;
+        opacity: 0.8;
+    }
+
+    /* 3. SI LA MORADA (CENTRO) ESTÁ ATRÁS: Aquí ocurre el intercambio */
+    /* Se asoma por arriba de la que esté activa en ese momento */
+    .plan-card-wrapper:nth-child(2):not(.active) {
+        /* Determinamos dónde asoma: si activaste la 1, la morada asoma un poco a la derecha */
+        /* Para simplificar y que sea siempre accesible, la dejamos centrada pero ARRIBA */
+        transform: translateX(-50%) translateY(-70px) scale(0.9);
+        z-index: 5; /* Mayor que las otras inactivas para que sea fácil de tocar */
+        opacity: 0.95;
+    }
+
+    /* Ajuste visual para la tarjeta morada cuando está atrás */
+    .plan-card-wrapper:nth-child(2):not(.active) .plan-card {
+        box-shadow: 0 -10px 20px rgba(142, 30, 174, 0.15);
+    }
+}
+@media (max-width: 991px) {
+    .plan-card-wrapper {
+        /* ... tus estilos anteriores ... */
+        user-select: none; /* Evita seleccionar texto al deslizar */
+        touch-action: pan-y; /* Permite scroll vertical pero bloquea el horizontal nativo */
+        
+        /* Transición con "rebote" (Back-out) para que se sienta más orgánico */
+        transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+}
+
+/* --- DECORACIÓN --- */
+.shape { position: absolute; z-index: 1; pointer-events: none; }
+.s-circ-mint { width: 300px; height: 300px; background: #C9E9E2; border-radius: 50%; bottom: -50px; left: -100px; opacity: 0.5; }
+.s-circ-purple { width: 350px; height: 350px; background: #8E1EAE; border-radius: 50%; top: 100px; right: -80px; opacity: 0.15; }
+
+
+/* --- ANIMACIONES PARA ELEMENTOS DE FONDO (SECCIÓN PLANES) --- */
+
+/* Reutilizamos el keyframe anterior o lo definimos si no lo tienes en este archivo */
+@keyframes floatShapes {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(3deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Aplicamos a las formas de la sección planes */
+.s-circ-mint {
+    animation: floatShapes 9s ease-in-out infinite;
+    /* Mantenemos su escala y posición base, la animación se suma */
+}
+
+.s-circ-purple {
+    animation: floatShapes 12s ease-in-out infinite reverse; /* Más lento por ser más grande */
+    animation-delay: 1.5s; /* Desfasado para que no se muevan en bloque */
+}
+
+/* Aseguramos que el overflow esté bien controlado para que las formas no creen scroll */
+.planes-section {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Seccion Contacto
+   ==========================================================================
+*/
+
+.contacto-section {
+    padding: 100px 0;
+    padding-bottom: 100px;
+    background-color: #8E1EAE; /* Color base morado */
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.s-circ-big{
+    position: absolute;
+    top: 50%;
+}
+
+.s-hex-outline{
+    position: absolute;
+    top: 35%;
+    left: 55%
+}
+.s-hex-fill{
+    position: absolute;
+    top: 70%;
+    left: 90%
+}
+
+.contacto-section h2{
+    font-size: var(--fs-h2);
+    color: white;
+}
+
+.contacto-section h6{
+    font-size: var(--fs-h6);
+    color: white !important;
+}
+
+
+.relative-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* --- TARJETAS GLASS --- */
+.contact-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 40px 20px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    height: 100%;
+    color: white;
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.icon-box {
+    font-size: 2.5rem;
+    color: #4CC9B0; /* Color menta de los iconos */
+    margin-bottom: 15px;
+}
+
+
+/* --- ADAPTACIÓN MÓVIL --- */
+@media (max-width: 768px) {
+    .contacto-section {
+        padding: 60px 0;
+    }
+    
+    .contact-card {
+        margin: 0 15px; /* Margen lateral en móvil */
+        padding: 30px 15px;
+    }
+
+    .display-5 {
+        font-size: 1.8rem;
+    }
+    
+    .s-circ-big {
+        width: 250px;
+        height: 250px;
+        left: -100px;
+    }
+}
+
+/* --- ANIMACIONES PARA ELEMENTOS DE FONDO --- */
+
+/* 1. Definimos el movimiento de flotación */
+@keyframes floatShapes {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* 2. Asignamos la animación a tus clases existentes sin borrar sus propiedades */
+.s-circ-big {
+    /* Mantenemos tu top: 50%, pero añadimos la animación */
+    animation: floatShapes 8s ease-in-out infinite;
+}
+
+.s-hex-outline {
+    animation: floatShapes 6s ease-in-out infinite reverse; /* Sentido opuesto */
+    animation-delay: 1s;
+}
+
+.s-hex-fill {
+    animation: floatShapes 10s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Ajuste para que el círculo grande no pierda su centrado vertical original durante la animación */
+.s-circ-big {
+    transform-origin: center;
+}
+
+/* ==========================================================================
+   Seccion Footer
+   ==========================================================================
+*/
+.main-footer {
+    background-color: #0d121f; /* Color oscuro profundo de la imagen */
+    color: white;
+    padding: 40px 0 20px 0; /* Padding reducido para que ocupe menos */
+    border-top: 20px solid #1a1d29; /* Borde superior grueso y oscuro como en la imagen */
+    font-family: 'Inter', sans-serif;
+}
+.main-footer h2{
+   color: white;
+}
+.main-footer p{
+   color: 8690A4;
+}
+
+.footer-title {
+    font-size: 1.4rem; /* Más pequeño para mayor elegancia */
+    margin-bottom: 1rem;
+}
+
+.footer-description {
+    max-width: 400px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.footer-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links li {
+    margin-bottom: 8px; /* Espacio entre enlaces más ajustado */
+}
+
+.footer-links a {
+    display: inline-block; /* Necesario para que transform funcione correctamente */
+    color: white;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición suave */
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    color: var(--P100);
+
+    transform: translateX(-8px);
+}
+
+/* Línea divisoria más fina */
+.footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 30px 0 20px 0;
+}
+
+.footer-bottom {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+/* Adaptación para que en móvil no se vea gigante */
+@media (max-width: 991px) {
+    .main-footer {
+        padding: 30px 10px 20px 10px;
+        border-top-width: 15px; /* Borde un poco más delgado en móvil */
+    }
 }
