@@ -50,7 +50,7 @@
               <a class="nav-link" href="#soluciones-container">Servicios</a>
               <a class="nav-link" href="#casos-exito-section">Trabajos</a>
               <a class="nav-link" href="#planes-section">Planes</a>
-              <a class="nav-link btn-presupuesto" href="#">Presupuestar</a>
+              <a class="nav-link btn-presupuesto" target="_blank"  href="https://wa.me/3465404524">Presupuestar</a>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
 
     <main>
       <!-- Seccion Hero -->
-      <section class="hero position-relative overflow-hidden">
+      <section class="hero position-relative overflow-hidden" id="hero">
         <div class="hero-shapes">
           <div class="shape shape-hexagon shape-1">
             <svg
@@ -107,7 +107,7 @@
 
               <!-- Botones -->
               <div class="hero-buttons d-flex gap-2 flex-wrap">
-                <a href="">
+                <a href="https://wa.me/3465404524" target="_blank" >
                   <button
                     id="btn-hero-1"
                     class="btn-hero d-inline-flex align-items-center"
@@ -768,37 +768,29 @@
       </section>
 
       <!-- Seccion Carrucel TikTok -->
-      <section class="carousel-section">
-        <div class="container text-center mb-5">
-          <h2 class="section-title mb-2">Conoce nuestro trabajo</h2>
-          <p class="section-subtitle">
-            Historias reales de marcas que transformaron su presencia digital
-          </p>
-        </div>
+      <section class="video-carousel" id="tiktok-section">
+        <div class="text-center " id="titulo-tiktok">
+            <h2 class="titulo-seccion">Casos de Éxito</h2>
+            <h6 class="texto-seccion">
+              Historias reales de marcas que transformaron su presencia digital
+            </h6>
+          </div>
 
-        <div class="d-flex justify-content-center">
-          <div class="stage-wrap">
-            <button class="btn-nav prev" id="prevBtn" aria-label="Anterior">
-              <svg viewBox="0 0 24 24">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
+        <div
+          class="carousel-wrapper d-flex justify-content-center align-items-center"
+        >
+          <div class="video-item side" data-index="0">
+            <video src="assets/videos/video1.mp4" muted playsinline></video>
+          </div>
 
-            <div class="stage" id="stage">
-              <div class="slot" id="sL"></div>
-              <div class="slot" id="sC"></div>
-              <div class="slot" id="sR"></div>
-            </div>
+          <div class="video-item center" data-index="1">
+            <video src="assets/videos/video2.mp4" muted playsinline></video>
+          </div>
 
-            <button class="btn-nav next" id="nextBtn" aria-label="Siguiente">
-              <svg viewBox="0 0 24 24">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
+          <div class="video-item side" data-index="2">
+            <video src="assets/videos/video3.mp4" muted playsinline></video>
           </div>
         </div>
-
-        <div class="dots" id="dots"></div>
       </section>
 
       <!-- Seccion Planes -->
@@ -996,7 +988,7 @@
                   </svg>
                 </div>
                 <h3 class="h5 fw-bold">Teléfono</h3>
-                <a href="" target="_blank" class="mb-0">+54 3465 40-4524</a>
+                <a href="https://wa.me/3465404524" target="_blank" class="mb-0">+54 3465 40-4524</a>
               </div>
             </div>
 
@@ -1033,10 +1025,10 @@
           <div class="col-lg-4 col-md-12 text-lg-end">
             <h3 class="footer-subtitle fw-bold mb-4">Enlaces Rápidos</h3>
             <ul class="list-unstyled footer-links">
-              <li><a href="#conocenos">Conócenos</a></li>
-              <li><a href="#servicios">Servicios</a></li>
-              <li><a href="#casos">Casos de Éxito</a></li>
-              <li><a href="#planes">Planes</a></li>
+              <li><a href="#hero">Inicio</a></li>
+              <li><a href="#soluciones-container">Servicios</a></li>
+              <li><a href="#casos-exito-section">Trabajos</a></li>
+              <li><a href="#planes-section">Planes</a></li>
             </ul>
           </div>
         </div>
@@ -1120,165 +1112,84 @@
       }
 
       /* CARRUCEL DE VIDEOS*/
+      const items = document.querySelectorAll(".video-item");
+      const isMobile = window.innerWidth <= 768;
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const data = [
-          "assets/videos/video1.mp4",
-          "assets/videos/video2.mp4",
-          "assets/videos/video3.mp4",
-          "assets/videos/video4.mp4",
-          "assets/videos/video5.mp4",
-        ];
+      /**
+       * 3. Videos Desktop
+       */
+      if (!isMobile) {
+        const initial = document.querySelector(".video-item.center video");
+        if (initial) {
+          initial.loop = true;
+          initial.play();
+        }
+      }
+      if (!isMobile) {
+        items.forEach((item) => {
+          item.addEventListener("click", () => {
+            if (item.classList.contains("center")) return;
 
-        let current = 0;
-        let isAnimating = false;
+            const currentCenter = document.querySelector(".video-item.center");
+            const currentVideo = currentCenter.querySelector("video");
+            const newVideo = item.querySelector("video");
 
-        let startX = 0;
-        let endX = 0;
+            // Pausar actual
+            currentVideo.pause();
+            currentVideo.currentTime = 0;
 
-        const sL = document.getElementById("sL");
-        const sC = document.getElementById("sC");
-        const sR = document.getElementById("sR");
-        const stage = document.getElementById("stage");
+            // Cambiar clases
+            currentCenter.classList.remove("center");
+            currentCenter.classList.add("side");
 
-        const prevBtn = document.getElementById("prevBtn");
-        const nextBtn = document.getElementById("nextBtn");
-        const dotsContainer = document.getElementById("dots");
+            item.classList.remove("side");
+            item.classList.add("center");
 
-        // 🎥 Crear videos UNA sola vez
-        const vL = document.createElement("video");
-        const vC = document.createElement("video");
-        const vR = document.createElement("video");
-
-        [vL, vC, vR].forEach((v) => {
-          v.loop = true;
-          v.muted = true;
-          v.playsInline = true;
-          v.preload = "auto";
+            newVideo.loop = true;
+            newVideo.play();
+          });
         });
+      }
 
-        sL.appendChild(vL);
-        sC.appendChild(vC);
-        sR.appendChild(vR);
+      /**
+       * 4. Videos Movil
+       */
+      if (isMobile) {
+        const videos = document.querySelectorAll(".video-item video");
+        let currentIndex = 1;
 
-        function updateSlots() {
-          const prevIndex = (current - 1 + data.length) % data.length;
-          const nextIndex = (current + 1) % data.length;
+        function setActive(index) {
+          items.forEach((item, i) => {
+            item.classList.remove("center", "side");
 
-          [vL, vC, vR].forEach((v) => {
-            v.pause();
-            v.currentTime = 0;
+            if (i === index) {
+              item.classList.add("center");
+            } else {
+              item.classList.add("side");
+            }
           });
 
-          vL.src = data[prevIndex];
-          vC.src = data[current];
-          vR.src = data[nextIndex];
+          videos.forEach((vid) => {
+            vid.pause();
+            vid.currentTime = 0;
+          });
 
-          vC.play();
-
-          sL.className = "slot is-side";
-          sC.className = "slot is-center";
-          sR.className = "slot is-side";
-
-          updateDots();
+          videos[index].play();
         }
 
-        function animate(direction) {
-          if (isAnimating) return;
-          isAnimating = true;
+        // iniciar
+        setActive(currentIndex);
 
-          if (direction === "next") {
-            sC.classList.add("anim-out-left");
-            sR.classList.add("anim-in-right");
-          } else {
-            sC.classList.add("anim-out-right");
-            sL.classList.add("anim-in-left");
-          }
-
-          setTimeout(() => {
-            sL.classList.remove("anim-in-left", "anim-out-left");
-            sC.classList.remove("anim-out-left", "anim-out-right");
-            sR.classList.remove("anim-in-right", "anim-out-right");
-            isAnimating = false;
-          }, 400);
-        }
-
-        function next() {
-          if (isAnimating) return;
-
-          animate("next");
-
-          setTimeout(() => {
-            current = (current + 1) % data.length;
-            updateSlots();
-          }, 200);
-        }
-
-        function prev() {
-          if (isAnimating) return;
-
-          animate("prev");
-
-          setTimeout(() => {
-            current = (current - 1 + data.length) % data.length;
-            updateSlots();
-          }, 200);
-        }
-
-        function createDots() {}
-
-        function updateDots() {}
-
-        // 🎯 SWIPE MOBILE + MOUSE
-        stage.addEventListener("touchstart", (e) => {
-          startX = e.touches[0].clientX;
+        // loop automático
+        videos.forEach((video, index) => {
+          video.addEventListener("ended", () => {
+            if (index === currentIndex) {
+              currentIndex = (currentIndex + 1) % items.length;
+              setActive(currentIndex);
+            }
+          });
         });
-
-        stage.addEventListener("touchmove", (e) => {
-          endX = e.touches[0].clientX;
-        });
-
-        stage.addEventListener("touchend", handleSwipe);
-
-        // desktop testing
-        stage.addEventListener("mousedown", (e) => {
-          startX = e.clientX;
-        });
-
-        stage.addEventListener("mouseup", (e) => {
-          endX = e.clientX;
-          handleSwipe();
-        });
-
-        function handleSwipe() {
-          if (isAnimating) return;
-
-          const diff = startX - endX;
-          const threshold = window.innerWidth * 0.15;
-
-          if (Math.abs(diff) < threshold) return;
-
-          if (diff > 0) {
-            next();
-          } else {
-            prev();
-          }
-
-          startX = 0;
-          endX = 0;
-        }
-
-        // Eventos botones
-        prevBtn.addEventListener("click", prev);
-        nextBtn.addEventListener("click", next);
-
-        sL.addEventListener("click", prev);
-        sR.addEventListener("click", next);
-
-        // Init
-        createDots();
-        updateSlots();
-      });
+      }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

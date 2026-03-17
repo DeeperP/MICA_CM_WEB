@@ -55,7 +55,7 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
 
 .texto-seccion{
     font-size: var(--fs-h6);
-    color: var(--B700);
+    color: var(--B600);
 }
 .titulo-seccion{
     font-size: var(--fs-h2);
@@ -948,282 +948,109 @@ section {
    Carrucel TikTok
    ==========================================================================
 */
- /* ==========================================================================
-   CAROUSEL STAGE (ADAPTADO A TU MARCA)
-   ========================================================================== */
-:root {
-    /* Ajustado a formato vertical real */
-    --card-w: 240px;
-    --card-h: 426px; /* relación 9:16 */
-    --gap: 24px;
-    --T: 0.5s;
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    
-    --purple: var(--P300);
-    --purple-light: var(--P200);
-    --purple-border: rgba(166, 35, 203, 0.2);
-    --gray-card: var(--B200);
-    --text-dark: var(--B700);
-    --text-muted: var(--B500);
+
+.video-carousel{
+    scroll-margin-top: 20px;
 }
 
-/* ——— TITLES ——— */
-.section-title {
-    font-weight: var(--fw-bold);
-    font-size: clamp(1.8rem, 4vw, var(--fs-h2));
-    color: var(--text-dark);
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+.carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding-bottom: 6rem;
+  padding-top: 6rem;
 }
 
-.section-subtitle {
-    font-weight: var(--fw-regular);
-    font-size: var(--fs-p);
-    color: var(--text-muted);
+/* BASE */
+.video-item {
+  width: 240px;
+  height: 420px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+
+  transition: 
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    filter 0.4s ease;
 }
 
-/* ——— STAGE ——— */
-.carousel-section { 
-    padding: 4rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stage-wrap {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-.stage {
-    display: flex;
-    align-items: center;
-    gap: var(--gap);
-    width: calc(var(--card-w) * 3 + var(--gap) * 2);
-    overflow: visible;
-    position: relative;
-}
-
-/* ——— CARD SLOT ——— */
-.slot {
-    flex: 0 0 var(--card-w);
-    height: var(--card-h);
-    border-radius: var(--radius-md);
-    border: 2.5px solid var(--purple-border);
-    background: black; /* mejor para video */
-    overflow: hidden;
-    position: relative;
-    transition:
-        transform    var(--T) var(--ease),
-        opacity      var(--T) var(--ease),
-        box-shadow   var(--T) var(--ease),
-        border-color var(--T) var(--ease);
-}
-
-/* LADOS */
-.slot.is-side {
-    opacity: 0.5;
-    transform: scale(0.85);
-    cursor: pointer;
-    filter: grayscale(0.4);
-}
-
-.slot.is-side:hover {
-    opacity: 0.75;
-    transform: scale(0.9);
-    filter: grayscale(0);
+/* VIDEO */
+.video-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* CENTRO */
-.slot.is-center {
-    opacity: 1;
-    transform: scale(1);
-    border-color: var(--purple);
-    box-shadow: 0 20px 60px rgba(166, 35, 203, 0.3);
-    z-index: 2;
+.video-item.center {
+  transform: scale(1.15);
+  opacity: 1;
+  z-index: 2;
+  border: 3px solid var(--P300);
 }
 
-/* ——— IFRAME (CLAVE) ——— */
-.slot iframe {
+/* LATERALES */
+.video-item.side {
+  transform: scale(0.85);
+  opacity: 0.4;
+  filter: grayscale(40%);
+}
+
+/* HOVER */
+.video-item.side:hover {
+  opacity: 0.7;
+  transform: scale(1);
+}
+
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    flex-direction: column;
+    gap: 0;
+    padding-top: 0rem;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .video-item {
+    width: 100%;
+    max-width: 100%;
+    
+    /* 🔥 CLAVE: 16:9 */
+    aspect-ratio: 9 / 16;
+    height: auto;
+
+    transform: scale(0.8) !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Ocultar los laterales */
+  .video-item.side {
+    display: none;
+  }
+
+  /* El central ocupa todo */
+  .video-item.center {
+    width: 100%;
+    border: none;
+    box-shadow: none;
+  }
+
+  .video-item video {
     width: 100%;
     height: 100%;
-    border: none;
-    display: block;
-}
+    object-fit: cover;
+  }
 
-/* ——— STANDBY OVERLAY ——— */
-.standby {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(65, 55, 69, 0.4);
-    transition: opacity var(--T) var(--ease);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.is-center .standby { opacity: 0; }
-.is-side .standby   { opacity: 1; }
-
-.play-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.play-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: #fff;
-    margin-left: 3px;
-}
-
-/* ——— NAV ——— */
-.btn-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: white;
-    border: 1.5px solid var(--B300);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.btn-nav:hover { 
-    background: var(--purple); 
-    border-color: var(--purple);
-    transform: translateY(-50%) scale(1.1); 
-}
-
-.btn-nav:hover svg { stroke: #fff; }
-
-.btn-nav.prev { right: calc(100% + 20px); }
-.btn-nav.next { left:  calc(100% + 20px); }
-
-.btn-nav svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--purple);
-    fill: none;
-    stroke-width: 2.5;
-}
-
-/* ——— DOTS ——— */
-.dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 2.5rem;
-}
-
-.dot {
-    width: 24px;
-    height: 6px;
-    border-radius: 10px;
-    background: var(--B400);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.dot.active { 
-    background: var(--purple); 
-    width: 40px; 
-}
-
-/* ——— ANIMATIONS ——— */
-@keyframes slideOutLeft {
-  from { opacity: 1; transform: scale(1) translateX(0); }
-  to   { opacity: 0; transform: scale(0.8) translateX(-40px); }
-}
-
-@keyframes slideOutRight {
-  from { opacity: 1; transform: scale(1) translateX(0); }
-  to   { opacity: 0; transform: scale(0.8) translateX(40px); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: scale(0.8) translateX(-40px); }
-  to   { opacity: 0.5; transform: scale(0.85) translateX(0); }
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: scale(0.8) translateX(40px); }
-  to   { opacity: 0.5; transform: scale(0.85) translateX(0); }
-}
-
-.slot.anim-out-left  { animation: slideOutLeft  var(--T) var(--ease) forwards; }
-.slot.anim-out-right { animation: slideOutRight var(--T) var(--ease) forwards; }
-.slot.anim-in-left   { animation: slideInLeft   var(--T) var(--ease) forwards; }
-.slot.anim-in-right  { animation: slideInRight  var(--T) var(--ease) forwards; }
-
-/* ——— RESPONSIVE ——— */
-@media (max-width: 500px) {
-    .stage {
-        width: var(--card-w);
-        height: var(--card-h);
-        position: relative;
-        overflow: visible;
-    }
-
-    /* TODOS superpuestos */
-    .slot {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transition: transform 0.4s ease, opacity 0.4s ease;
-    }
-
-    /* CENTRO */
-    .slot.is-center {
-        z-index: 3;
-        transform: scale(1) translateX(0);
-        opacity: 1;
-    }
-
-    /* IZQUIERDA */
-    #sL {
-        z-index: 1;
-        transform: scale(0.85) translateX(-80px);
-        opacity: 0.5;
-    }
-
-    /* DERECHA */
-    #sR {
-        z-index: 2;
-        transform: scale(0.85) translateX(80px);
-        opacity: 0.5;
-    }
-
-    .btn-nav {
-        display: none;
-    }
-
-    /* UX táctil */
-    .stage {
-        touch-action: pan-y;
+    .video-carousel {
+        padding-bottom: 0rem !important;
+        padding-top: 4rem !important;
     }
 }
+
 /* ==========================================================================
    Seccion Planes
    ==========================================================================
