@@ -1513,3 +1513,41 @@ section {
         list-style: none;
     }
 }
+
+/* Estilo base para el link de la firma */
+#link-footer {
+    color: var(--color-primary); /* El color principal de tu web */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+/* Efecto al pasar el mouse */
+#link-footer:hover {
+    color: white;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* La línea que se expande debajo */
+#link-footer::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+#link-footer:hover::after {
+    width: 100%;
+}
+
+/* Ajuste para que el contenedor no se vea tan transparente al hacer hover */
+.footer-bottom:hover {
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+}
