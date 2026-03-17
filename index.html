@@ -47,9 +47,9 @@
             id="navbarNav"
           >
             <div class="navbar-nav navbar-collapse-custom align-items-center">
-              <a class="nav-link" href="#">Conocenos</a>
-              <a class="nav-link" href="#">Servicios</a>
-              <a class="nav-link" href="#">Precios</a>
+              <a class="nav-link" href="#soluciones-container">Servicios</a>
+              <a class="nav-link" href="#casos-exito-section">Trabajos</a>
+              <a class="nav-link" href="#planes-section">Planes</a>
               <a class="nav-link btn-presupuesto" href="#">Presupuestar</a>
             </div>
           </div>
@@ -107,44 +107,49 @@
 
               <!-- Botones -->
               <div class="hero-buttons d-flex gap-2 flex-wrap">
-                <button
-                  id="btn-hero-1"
-                  class="btn-hero d-inline-flex align-items-center"
-                >
-                  <span>Contáctanos ahora</span>
-                  <img
-                    src="src/logo_chat_24.png"
-                    width="24"
-                    class="ms-2"
-                    alt=""
-                  />
-                </button>
+                <a href="">
+                  <button
+                    id="btn-hero-1"
+                    class="btn-hero d-inline-flex align-items-center"
+                  >
+                    <span>Contáctanos ahora</span>
+                    <img
+                      src="src/logo_chat_24.png"
+                      width="24"
+                      class="ms-2"
+                      alt=""
+                    />
+                  </button>
+                </a>
+                <a href="#casos-exito-section">
+                  <button
+                    id="btn-hero-2"
+                    class="btn-hero d-inline-flex align-items-center"
+                  >
+                    <span>Casos de Éxito</span>
+                    <img
+                      src="src/logo_star_24.png"
+                      width="24"
+                      class="ms-2"
+                      alt=""
+                    />
+                  </button>
+                </a>
 
-                <button
-                  id="btn-hero-2"
-                  class="btn-hero d-inline-flex align-items-center"
-                >
-                  <span>Casos de Éxito</span>
-                  <img
-                    src="src/logo_star_24.png"
-                    width="24"
-                    class="ms-2"
-                    alt=""
-                  />
-                </button>
-
-                <button
-                  id="btn-hero-3"
-                  class="btn-hero d-none d-md-inline-flex align-items-center"
-                >
-                  <span>Nuestros Trabajos</span>
-                  <img
-                    src="src/logo_corazon_lleno_24.png"
-                    width="24"
-                    class="ms-2"
-                    alt=""
-                  />
-                </button>
+                <a href="#tiktok-section">
+                  <button
+                    id="btn-hero-3"
+                    class="btn-hero d-none d-md-inline-flex align-items-center"
+                  >
+                    <span>Videos</span>
+                    <img
+                      src="src/logo_corazon_lleno_24.png"
+                      width="24"
+                      class="ms-2"
+                      alt=""
+                    />
+                  </button>
+                </a>
               </div>
             </div>
 
@@ -165,12 +170,12 @@
       </section>
 
       <!-- Seccion Motivos -->
-      <section class="motivos position-relative overflow-hidden">
+      <section class="motivos position-relative overflow-hidden" id="motivos">
         <div class="container motivos-cont">
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-9">
-              <h2 class="titulo-motivos">¿Por qué trabajar conmigo?</h2>
-              <h6 class="texto-motivos">
+              <h2 class="titulo-seccion">¿Por qué trabajar conmigo?</h2>
+              <h6 class="texto-seccion">
                 Soy Micaela Coria, community manager especializada en dar vida a
                 marcas en el entorno digital. Mi enfoque combina creatividad,
                 estrategia y análisis para lograr que tu presencia online no
@@ -548,10 +553,10 @@
       </section>
 
       <!-- Seccion Soluciones -->
-      <section class="soluciones-container">
+      <section class="soluciones-container" id="soluciones-container">
         <div class="container section-acordeon">
           <div class="text-center mb-5 py-5">
-            <h2 class="titulo-motivos">Soluciones a medida de tu marca</h2>
+            <h2 class="titulo-seccion">Soluciones a medida de tu marca</h2>
           </div>
 
           <div class="accordion" id="accordion">
@@ -654,11 +659,11 @@
       </section>
 
       <!-- Seccion Casos de Exito -->
-      <section class="casos-exito-section">
+      <section class="casos-exito-section" id="casos-exito-section">
         <div class="container">
           <div class="text-center mb-5 py-5">
-            <h2 class="titulo-motivos">Casos de Éxito</h2>
-            <h6 class="texto-motivos">
+            <h2 class="titulo-seccion">Casos de Éxito</h2>
+            <h6 class="texto-seccion">
               Historias reales de marcas que transformaron su presencia digital
             </h6>
           </div>
@@ -763,61 +768,41 @@
       </section>
 
       <!-- Seccion Carrucel TikTok -->
-      <section class="tiktok-section py-5">
-        <div class="container">
-          <div class="text-center mb-5">
-            <h2 class="fw-bold display-5 titulo-motivos">
-              Conoce nuestro trabajo
-            </h2>
-            <p class="text-muted texto-motivos">
-              Historias reales de marcas que transformaron su presencia digital
-            </p>
-          </div>
+      <section class="carousel-section">
+        <div class="container text-center mb-5">
+          <h2 class="section-title mb-2">Conoce nuestro trabajo</h2>
+          <p class="section-subtitle">
+            Historias reales de marcas que transformaron su presencia digital
+          </p>
+        </div>
 
-          <div class="tiktok-carousel-container py-5">
-            <button class="nav-btn prev" onclick="moveSlide(-1)">
-              <span>&#8249;</span>
+        <div class="d-flex justify-content-center">
+          <div class="stage-wrap">
+            <button class="btn-nav prev" id="prevBtn" aria-label="Anterior">
+              <svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
             </button>
-            <div class="tiktok-track" id="tiktokTrack">
-  <div class="tiktok-card">
-    <video loop muted playsinline class="tk-video">
-      <source src="https://v.ftcdn.net/05/52/15/51/700_F_552155139_mE7y80X6A6h3X5O7O8Xq3O8l2K4E9kQn_ST.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="tiktok-card">
-    <video loop muted playsinline class="tk-video">
-      <source src="https://v.ftcdn.net/05/22/01/21/700_F_522012173_p3qL4X8H1kO6X5O7O8Xq3O8l2K4E9kQn_ST.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="tiktok-card">
-    <video loop muted playsinline class="tk-video">
-      <source src="https://v.ftcdn.net/04/81/25/32/700_F_481253272_mE7y80X6A6h3X5O7O8Xq3O8l2K4E9kQn_ST.mp4" type="video/mp4" />
-    </video>
-  </div>
-</div>
 
-            <button class="nav-btn next" onclick="moveSlide(1)">
-              <span>&#8250;</span>
+            <div class="stage" id="stage">
+              <div class="slot" id="sL"></div>
+              <div class="slot" id="sC"></div>
+              <div class="slot" id="sR"></div>
+            </div>
+
+            <button class="btn-nav next" id="nextBtn" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </button>
-          </div>
-
-          <div class="tiktok-dots mt-4" id="tiktokDots"></div>
-
-          <div class="text-center mt-5">
-            <a
-              href="https://instagram.com/Micacoria"
-              target="_blank"
-              class="ig-modern-badge"
-            >
-              <img src="instagram.png" alt="Instagram" class="ig-logo" />
-              <span class="ig-handle">@Micacoria</span>
-            </a>
           </div>
         </div>
+
+        <div class="dots" id="dots"></div>
       </section>
 
       <!-- Seccion Planes -->
-      <section class="planes-section">
+      <section class="planes-section" id="planes-section">
         <div class="shape s-circ-mint"></div>
         <div class="shape s-circ-purple"></div>
         <div class="shape s-rect-pink"></div>
@@ -825,12 +810,12 @@
 
         <div class="container relative-content">
           <div class="text-center mb-5 py-5">
-            <h2 class="fw-bold display-5 titulo-motivos">
+            <h2 class="fw-bold display-5 titulo-seccion">
               Conoce nuestro trabajo
             </h2>
-            <p class="text-muted texto-motivos">
+            <h6 class="text-muted texto-seccion">
               Historias reales de marcas que transformaron su presencia digital
-            </p>
+            </h6>
           </div>
 
           <div class="planes-stack-container" id="planesStack">
@@ -930,7 +915,7 @@
       </section>
 
       <!--Seccion Contactos-->
-      <section class="contacto-section">
+      <section class="contacto-section" id="contacto-section">
         <div class="shape s-circ-big">
           <svg
             width="262"
@@ -987,17 +972,31 @@
                   <i class="bi bi-envelope"></i>
                 </div>
                 <h3 class="h5 fw-bold">Email</h3>
-                <p class="mb-0">micacoria@gmail.com</p>
+                <a target="_blank" class="mb-0">micacoria@gmail.com</a>
               </div>
             </div>
 
             <div class="col-lg-4 col-md-6">
               <div class="contact-card">
                 <div class="icon-box">
-                  <i class="bi bi-telephone"></i>
+                  <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                  <svg
+                    fill="#4CC9B0"
+                    width="45px"
+                    height="45px"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.42 9.49c-.19-.09-1.1-.54-1.27-.61s-.29-.09-.42.1-.48.6-.59.73-.21.14-.4 0a5.13 5.13 0 0 1-1.49-.92 5.25 5.25 0 0 1-1-1.29c-.11-.18 0-.28.08-.38s.18-.21.28-.32a1.39 1.39 0 0 0 .18-.31.38.38 0 0 0 0-.33c0-.09-.42-1-.58-1.37s-.3-.32-.41-.32h-.4a.72.72 0 0 0-.5.23 2.1 2.1 0 0 0-.65 1.55A3.59 3.59 0 0 0 5 8.2 8.32 8.32 0 0 0 8.19 11c.44.19.78.3 1.05.39a2.53 2.53 0 0 0 1.17.07 1.93 1.93 0 0 0 1.26-.88 1.67 1.67 0 0 0 .11-.88c-.05-.07-.17-.12-.36-.21z"
+                    />
+                    <path
+                      d="M13.29 2.68A7.36 7.36 0 0 0 8 .5a7.44 7.44 0 0 0-6.41 11.15l-1 3.85 3.94-1a7.4 7.4 0 0 0 3.55.9H8a7.44 7.44 0 0 0 5.29-12.72zM8 14.12a6.12 6.12 0 0 1-3.15-.87l-.22-.13-2.34.61.62-2.28-.14-.23a6.18 6.18 0 0 1 9.6-7.65 6.12 6.12 0 0 1 1.81 4.37A6.19 6.19 0 0 1 8 14.12z"
+                    />
+                  </svg>
                 </div>
                 <h3 class="h5 fw-bold">Teléfono</h3>
-                <p class="mb-0">3465-0000</p>
+                <a href="" target="_blank" class="mb-0">+54 3465 40-4524</a>
               </div>
             </div>
 
@@ -1005,10 +1004,14 @@
               <div class="contact-card">
                 <div class="icon-box">
                   <i class="bi bi-instagram"></i>
-                  <i class="bi bi-linkedin ms-2"></i>
                 </div>
                 <h3 class="h5 fw-bold">Redes Sociales</h3>
-                <p class="mb-0">@noelia</p>
+                <a
+                  href="https://www.instagram.com/micacm.marketing"
+                  target="_blank"
+                  class="mb-0"
+                  >@micacm.marketing</a
+                >
               </div>
             </div>
           </div>
@@ -1057,68 +1060,8 @@
           .querySelectorAll(".dot")
           .forEach((d, i) => d.classList.toggle("active", i === index));
       }
-
       /**
-       * 2. CARRUSEL TIKTOK INFINITO
-       */
-      const track = document.getElementById("tiktokTrack");
-      if (track) {
-        const cards = Array.from(track.querySelectorAll(".tiktok-card"));
-        const cardWidth = cards[0].offsetWidth + 20;
-
-        // Clonación para efecto infinito
-        const firstClone = cards[0].cloneNode(true);
-        const lastClone = cards[cards.length - 1].cloneNode(true);
-        track.appendChild(firstClone);
-        track.insertBefore(lastClone, track.firstChild);
-
-        const allCards = track.querySelectorAll(".tiktok-card");
-        track.scrollLeft = cardWidth; // Posición inicial real
-
-        // Salto infinito
-        track.addEventListener("scroll", () => {
-          if (track.scrollLeft >= track.scrollWidth - track.offsetWidth - 5) {
-            track.style.scrollBehavior = "auto";
-            track.scrollLeft = cardWidth;
-          } else if (track.scrollLeft <= 5) {
-            track.style.scrollBehavior = "auto";
-            track.scrollLeft = track.scrollWidth - cardWidth * 2;
-          }
-          track.style.scrollBehavior = "smooth";
-        });
-
-        // Observador de videos (Auto-play al centro)
-        const videoObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const video = entry.target.querySelector("video");
-              if (!video) return;
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-active");
-                video.play().catch(() => {});
-              } else {
-                entry.target.classList.remove("is-active");
-                video.pause();
-              }
-            });
-          },
-          { root: track, threshold: 0.8 },
-        );
-
-        allCards.forEach((card) => videoObserver.observe(card));
-      }
-
-      // Control manual de flechas TikTok
-      function moveSlide(direction) {
-        const track = document.getElementById("tiktokTrack");
-        const firstCard = track.querySelector(".tiktok-card");
-        const step = firstCard.offsetWidth + 20;
-        track.style.scrollBehavior = "smooth";
-        track.scrollLeft += direction * step;
-      }
-
-      /**
-       * 3. STACK DE PLANES (MÓVIL / SWIPE)
+       * 2. STACK DE PLANES (MÓVIL / SWIPE)
        */
       const stack = document.getElementById("planesStack");
       let touchStartX = 0;
@@ -1175,7 +1118,167 @@
           if (window.navigator.vibrate) window.navigator.vibrate(20);
         }
       }
-      
+
+      /* CARRUCEL DE VIDEOS*/
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const data = [
+          "assets/videos/video1.mp4",
+          "assets/videos/video2.mp4",
+          "assets/videos/video3.mp4",
+          "assets/videos/video4.mp4",
+          "assets/videos/video5.mp4",
+        ];
+
+        let current = 0;
+        let isAnimating = false;
+
+        let startX = 0;
+        let endX = 0;
+
+        const sL = document.getElementById("sL");
+        const sC = document.getElementById("sC");
+        const sR = document.getElementById("sR");
+        const stage = document.getElementById("stage");
+
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const dotsContainer = document.getElementById("dots");
+
+        // 🎥 Crear videos UNA sola vez
+        const vL = document.createElement("video");
+        const vC = document.createElement("video");
+        const vR = document.createElement("video");
+
+        [vL, vC, vR].forEach((v) => {
+          v.loop = true;
+          v.muted = true;
+          v.playsInline = true;
+          v.preload = "auto";
+        });
+
+        sL.appendChild(vL);
+        sC.appendChild(vC);
+        sR.appendChild(vR);
+
+        function updateSlots() {
+          const prevIndex = (current - 1 + data.length) % data.length;
+          const nextIndex = (current + 1) % data.length;
+
+          [vL, vC, vR].forEach((v) => {
+            v.pause();
+            v.currentTime = 0;
+          });
+
+          vL.src = data[prevIndex];
+          vC.src = data[current];
+          vR.src = data[nextIndex];
+
+          vC.play();
+
+          sL.className = "slot is-side";
+          sC.className = "slot is-center";
+          sR.className = "slot is-side";
+
+          updateDots();
+        }
+
+        function animate(direction) {
+          if (isAnimating) return;
+          isAnimating = true;
+
+          if (direction === "next") {
+            sC.classList.add("anim-out-left");
+            sR.classList.add("anim-in-right");
+          } else {
+            sC.classList.add("anim-out-right");
+            sL.classList.add("anim-in-left");
+          }
+
+          setTimeout(() => {
+            sL.classList.remove("anim-in-left", "anim-out-left");
+            sC.classList.remove("anim-out-left", "anim-out-right");
+            sR.classList.remove("anim-in-right", "anim-out-right");
+            isAnimating = false;
+          }, 400);
+        }
+
+        function next() {
+          if (isAnimating) return;
+
+          animate("next");
+
+          setTimeout(() => {
+            current = (current + 1) % data.length;
+            updateSlots();
+          }, 200);
+        }
+
+        function prev() {
+          if (isAnimating) return;
+
+          animate("prev");
+
+          setTimeout(() => {
+            current = (current - 1 + data.length) % data.length;
+            updateSlots();
+          }, 200);
+        }
+
+        function createDots() {}
+
+        function updateDots() {}
+
+        // 🎯 SWIPE MOBILE + MOUSE
+        stage.addEventListener("touchstart", (e) => {
+          startX = e.touches[0].clientX;
+        });
+
+        stage.addEventListener("touchmove", (e) => {
+          endX = e.touches[0].clientX;
+        });
+
+        stage.addEventListener("touchend", handleSwipe);
+
+        // desktop testing
+        stage.addEventListener("mousedown", (e) => {
+          startX = e.clientX;
+        });
+
+        stage.addEventListener("mouseup", (e) => {
+          endX = e.clientX;
+          handleSwipe();
+        });
+
+        function handleSwipe() {
+          if (isAnimating) return;
+
+          const diff = startX - endX;
+          const threshold = window.innerWidth * 0.15;
+
+          if (Math.abs(diff) < threshold) return;
+
+          if (diff > 0) {
+            next();
+          } else {
+            prev();
+          }
+
+          startX = 0;
+          endX = 0;
+        }
+
+        // Eventos botones
+        prevBtn.addEventListener("click", prev);
+        nextBtn.addEventListener("click", next);
+
+        sL.addEventListener("click", prev);
+        sR.addEventListener("click", next);
+
+        // Init
+        createDots();
+        updateSlots();
+      });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

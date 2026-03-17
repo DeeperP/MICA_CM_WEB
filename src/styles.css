@@ -53,6 +53,19 @@ h1, .h1-design { font-size: var(--fs-h1); font-weight: var(--fw-bold); color: va
 h2, .h2-design { font-size: var(--fs-h2); font-weight: var(--fw-bold); color: var(--P400); }
 p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
 
+.texto-seccion{
+    font-size: var(--fs-h6);
+    color: var(--B700);
+}
+.titulo-seccion{
+    font-size: var(--fs-h2);
+    color: var(--P200);
+}
+section {
+    /* Ajusta este valor hasta que la sección quede donde te guste. 
+       Si tu navbar mide 80px, prueba con 150px o 200px */
+    scroll-margin-top: -100px; 
+}
 /* ==========================================================================
    NAVBAR
    ========================================================================== */
@@ -102,23 +115,7 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
 }
 
-/* --- AJUSTES PARA MÓVILES (MENOS DE 768px) --- */
-@media (max-width: 768px) {
-    .navbar-brand-custom {
-        width: 160px; /* Reducimos el ancho del contenedor en móvil */
-        height: 50px;
-    }
 
-    .texto-titulo {
-        font-size: 1rem; /* Más pequeño en móvil */
-    }
-    
-    /* El botón burger también un poco más pequeño en móvil si quieres */
-    .navbar-toggler {
-        padding: 8px;
-        border-radius: 12px;
-    }
-}
 
 .nav-link { 
     color: var(--B700) !important; 
@@ -157,16 +154,7 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     outline: none;
 }
 
-@media (min-width: 992px) {
-    .navbar-collapse-custom {
-        width: auto;
-        flex-grow: 0;
-    }
-    .navbar-collapse {
-        margin-top: 15px; /* Espacio para que no pegue con el botón burger */
-    }
-}
-
+/* --- AJUSTES PARA MÓVILES (MENOS DE 768px) --- */
 @media (max-width: 768px) {
     .navbar-brand-custom {
         width: 160px; /* Reducimos el ancho del contenedor en móvil */
@@ -182,12 +170,38 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
         padding: 8px;
         border-radius: 12px;
     }
+     .navbar-brand-custom {
+        width: 160px; /* Reducimos el ancho del contenedor en móvil */
+        height: 50px;
+        z-index: 1000;
+    }
+
+    .texto-titulo {
+        font-size: 1rem; /* Más pequeño en móvil */
+    }
+    
+    /* El botón burger también un poco más pequeño en móvil si quieres */
+    .navbar-toggler {
+        padding: 8px;
+        border-radius: 12px;
+    }
 
     .shape-3 svg {
-        width: 80px; /* Un poco más pequeño en móvil */
+        width: 80px !important; /* Un poco más pequeño en móvil */
         height: auto;
     }
 }
+
+@media (min-width: 992px) {
+    .navbar-collapse-custom {
+        width: auto;
+        flex-grow: 0;
+    }
+    .navbar-collapse {
+        margin-top: 15px; /* Espacio para que no pegue con el botón burger */
+    }
+}
+
 
 /* ==========================================================================
    HERO SECTION
@@ -467,15 +481,6 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     margin-top: 7rem;
 }
 
-.texto-motivos{
-    margin-top: 1.5rem;
-    font-size: var(--fs-h6);
-}
-
-.titulo-motivos{
-    font-size: var(--fs-h2);
-}
-
 /* --- TABLETS (Hasta 991px) --- */
 @media (max-width: 991.98px) {
     .motivos {
@@ -528,7 +533,9 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     align-items: center;
     justify-content: center;
     background-color: var(--B100);
-     text-align: center !important;
+    text-align: center !important;
+
+    scroll-margin-top: 5px;
 }
 
 .section-acordeon {
@@ -779,13 +786,6 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     background-size: cover;
 }
 
-.casos-exito-section h6{
-    font-size: var(--fs-h6);
-}
-.casos-exito-section h2{
-    font-size: var(--fs-h2);
-}
-
 .casos-wrapper {
     display: flex;
     flex-direction: column;
@@ -948,150 +948,282 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
    Carrucel TikTok
    ==========================================================================
 */
+ /* ==========================================================================
+   CAROUSEL STAGE (ADAPTADO A TU MARCA)
+   ========================================================================== */
+:root {
+    /* Ajustado a formato vertical real */
+    --card-w: 240px;
+    --card-h: 426px; /* relación 9:16 */
+    --gap: 24px;
+    --T: 0.5s;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --purple: var(--P300);
+    --purple-light: var(--P200);
+    --purple-border: rgba(166, 35, 203, 0.2);
+    --gray-card: var(--B200);
+    --text-dark: var(--B700);
+    --text-muted: var(--B500);
+}
 
-.tiktok-carousel-container {
+/* ——— TITLES ——— */
+.section-title {
+    font-weight: var(--fw-bold);
+    font-size: clamp(1.8rem, 4vw, var(--fs-h2));
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-p);
+    color: var(--text-muted);
+}
+
+/* ——— STAGE ——— */
+.carousel-section { 
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stage-wrap {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.stage {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    width: calc(var(--card-w) * 3 + var(--gap) * 2);
+    overflow: visible;
+    position: relative;
+}
+
+/* ——— CARD SLOT ——— */
+.slot {
+    flex: 0 0 var(--card-w);
+    height: var(--card-h);
+    border-radius: var(--radius-md);
+    border: 2.5px solid var(--purple-border);
+    background: black; /* mejor para video */
+    overflow: hidden;
+    position: relative;
+    transition:
+        transform    var(--T) var(--ease),
+        opacity      var(--T) var(--ease),
+        box-shadow   var(--T) var(--ease),
+        border-color var(--T) var(--ease);
+}
+
+/* LADOS */
+.slot.is-side {
+    opacity: 0.5;
+    transform: scale(0.85);
+    cursor: pointer;
+    filter: grayscale(0.4);
+}
+
+.slot.is-side:hover {
+    opacity: 0.75;
+    transform: scale(0.9);
+    filter: grayscale(0);
+}
+
+/* CENTRO */
+.slot.is-center {
+    opacity: 1;
+    transform: scale(1);
+    border-color: var(--purple);
+    box-shadow: 0 20px 60px rgba(166, 35, 203, 0.3);
+    z-index: 2;
+}
+
+/* ——— IFRAME (CLAVE) ——— */
+.slot iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* ——— STANDBY OVERLAY ——— */
+.standby {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: rgba(65, 55, 69, 0.4);
+    transition: opacity var(--T) var(--ease);
+    pointer-events: none;
+    z-index: 1;
 }
 
-.tiktok-track {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    padding: 20px 0;
-    -webkit-overflow-scrolling: touch;
-}
+.is-center .standby { opacity: 0; }
+.is-side .standby   { opacity: 1; }
 
-/* Ocultar barra de scroll */
-.tiktok-track::-webkit-scrollbar { display: none; }
-
-.tiktok-card {
-    flex: 0 0 calc(33.333% - 14px); /* 3 videos en desktop */
-    aspect-ratio: 9 / 16;
-    border-radius: 20px;
-    overflow: hidden;
-    scroll-snap-align: center;
-    transition: all 0.4s ease;
-    border: 2px solid var(--P200);
-    position: relative;
-}
-
-/* Los que no están en el centro se ven más opacos */
-.tiktok-card:not(.is-active) {
-    transform: scale(0.9);
-    opacity: 0.5;
-    filter: blur(1px);
-}
-
-.tk-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Botones Circulares */
-.nav-btn {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: var(--P200);
+.play-btn {
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    z-index: 10;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    margin-left: 3px;
+}
+
+/* ——— NAV ——— */
+.btn-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: white;
+    border: 1.5px solid var(--B300);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.nav-btn.prev { left: -60px; }
-.nav-btn.next { right: -60px; }
-
-/* Responsive */
-@media (max-width: 992px) {
-    .tiktok-card { flex: 0 0 70%; } /* En tablet se ve el central y asoman los costados */
-    .nav-btn { display: none; } /* En móvil usamos el dedo */
+.btn-nav:hover { 
+    background: var(--purple); 
+    border-color: var(--purple);
+    transform: translateY(-50%) scale(1.1); 
 }
 
-@media (max-width: 576px) {
-    .tiktok-card { flex: 0 0 85%; } /* En móvil casi pantalla completa */
-}
+.btn-nav:hover svg { stroke: #fff; }
 
-.ig-modern-badge {
-    text-decoration: none !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 24px;
-    background-color: #ffffff;
-    border: 1.5px solid var(--P100);
-    border-radius: 100px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+.btn-nav.prev { right: calc(100% + 20px); }
+.btn-nav.next { left:  calc(100% + 20px); }
 
-.ig-modern-badge .ig-handle {
-    color: var(--P600);
-    font-size: 0.95rem;
-    font-weight: 600;
-    z-index: 2;
-    transition: color 0.3s ease;
-}
-
-.ig-modern-badge .ig-logo {
+.btn-nav svg {
     width: 20px;
     height: 20px;
-    object-fit: contain;
-    z-index: 2;
-    transition: filter 0.3s ease;
+    stroke: var(--purple);
+    fill: none;
+    stroke-width: 2.5;
 }
 
-/* --- ESTADO HOVER --- */
-
-.ig-modern-badge:hover {
-    border-color: transparent;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(225, 48, 108, 0.3);
-    /* Degradado oficial de Instagram */
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+/* ——— DOTS ——— */
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2.5rem;
 }
 
-/* El texto pasa a blanco */
-.ig-modern-badge:hover .ig-handle {
-    color: #ffffff;
+.dot {
+    width: 24px;
+    height: 6px;
+    border-radius: 10px;
+    background: var(--B400);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-/* El icono pasa a blanco total usando filtros */
-.ig-modern-badge:hover .ig-logo {
-    filter: brightness(0) invert(1);
+.dot.active { 
+    background: var(--purple); 
+    width: 40px; 
 }
 
-/* Opcional: un ligero brillo al pasar el mouse */
-.ig-modern-badge::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255,255,255,0.1);
-    opacity: 0;
-    z-index: 1;
-    transition: opacity 0.3s;
+/* ——— ANIMATIONS ——— */
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: scale(1) translateX(0); }
+  to   { opacity: 0; transform: scale(0.8) translateX(-40px); }
 }
 
-.ig-modern-badge:hover::after {
-    opacity: 1;
+@keyframes slideOutRight {
+  from { opacity: 1; transform: scale(1) translateX(0); }
+  to   { opacity: 0; transform: scale(0.8) translateX(40px); }
 }
 
+@keyframes slideInLeft {
+  from { opacity: 0; transform: scale(0.8) translateX(-40px); }
+  to   { opacity: 0.5; transform: scale(0.85) translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: scale(0.8) translateX(40px); }
+  to   { opacity: 0.5; transform: scale(0.85) translateX(0); }
+}
+
+.slot.anim-out-left  { animation: slideOutLeft  var(--T) var(--ease) forwards; }
+.slot.anim-out-right { animation: slideOutRight var(--T) var(--ease) forwards; }
+.slot.anim-in-left   { animation: slideInLeft   var(--T) var(--ease) forwards; }
+.slot.anim-in-right  { animation: slideInRight  var(--T) var(--ease) forwards; }
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 500px) {
+    .stage {
+        width: var(--card-w);
+        height: var(--card-h);
+        position: relative;
+        overflow: visible;
+    }
+
+    /* TODOS superpuestos */
+    .slot {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* CENTRO */
+    .slot.is-center {
+        z-index: 3;
+        transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+
+    /* IZQUIERDA */
+    #sL {
+        z-index: 1;
+        transform: scale(0.85) translateX(-80px);
+        opacity: 0.5;
+    }
+
+    /* DERECHA */
+    #sR {
+        z-index: 2;
+        transform: scale(0.85) translateX(80px);
+        opacity: 0.5;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+
+    /* UX táctil */
+    .stage {
+        touch-action: pan-y;
+    }
+}
 /* ==========================================================================
    Seccion Planes
    ==========================================================================
@@ -1285,6 +1417,8 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     display: flex;
     align-items: center;
     position: relative;
+
+    
 }
 
 .s-circ-big{
@@ -1318,6 +1452,21 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     position: relative;
     z-index: 10;
 }
+.contacto-section a {
+    display: inline-block; /* Necesario para que transform funcione correctamente */
+    color: white;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición suave */
+    font-size: 0.9rem;
+}
+
+.contacto-section a:hover {
+    color: var(--T700);
+    transform: translateY(-5px);
+}
+
+
 
 /* --- TARJETAS GLASS --- */
 .contact-card {
@@ -1329,7 +1478,12 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     padding: 40px 20px;
     transition: transform 0.3s ease, background 0.3s ease;
     height: 100%;
+    width: 250px;
     color: white;
+    
+    /* SOLUCIÓN AL CENTRADO EN DESKTOP */
+    width: 250px;
+    margin: 0 auto; /* Centra la tarjeta dentro de la columna de Bootstrap */
 }
 
 .contact-card:hover {
@@ -1346,23 +1500,70 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
 
 /* --- ADAPTACIÓN MÓVIL --- */
 @media (max-width: 768px) {
+    /* Reducimos el espacio general de la sección */
     .contacto-section {
-        padding: 60px 0;
-    }
-    
-    .contact-card {
-        margin: 0 15px; /* Margen lateral en móvil */
-        padding: 30px 15px;
+        padding: 20px 0; /* Un poco más de aire que 20px para que no respire mal */
     }
 
-    .display-5 {
-        font-size: 1.8rem;
+    /* Tarjetas más compactas */
+    .contact-card {
+        width: 220px;       /* Reducimos el ancho (antes 250px) */
+        padding: 25px 15px; /* Menos padding interno para comprimir */
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 20px; /* Bordes un poco más suaves para el tamaño */
+    }
+
+    /* Iconos más pequeños para que no roben tanto espacio */
+    .contact-card .icon-box {
+        font-size: 1.8rem; 
+        margin-bottom: 10px;
     }
     
+    .contact-card .icon-box svg {
+        width: 35px !important; /* Forzamos tamaño del SVG de WhatsApp */
+        height: 35px !important;
+    }
+
+    /* Títulos y textos más pequeños */
+    .display-5 {
+        font-size: 1.6rem; /* Título principal más compacto */
+        line-height: 1.2;
+    }
+
+    .contact-card h3 {
+        font-size: 1.1rem; /* "Redes Sociales", "Email", etc */
+    }
+
+    .contact-card p {
+        font-size: 0.9rem; /* El texto del link/usuario */
+    }
+
+    /* Shapes de fondo más discretos para que no estorben */
     .s-circ-big {
-        width: 250px;
-        height: 250px;
-        left: -100px;
+        width: 180px;
+        height: 180px;
+        left: -80px;
+        opacity: 0.5; /* Los hacemos más tenues en móvil */
+    }
+
+    .s-hex-outline, .s-hex-fill {
+        transform: scale(0.6); /* Reducimos los hexágonos un 40% */
+    }
+    .relative-content .py-5 {
+        padding-top: 2rem !important;    /* Menos espacio arriba */
+        padding-bottom: 1.5rem !important; /* Menos espacio abajo */
+        margin-bottom: 1rem !important;    /* Reduce el espacio entre el título y las cards */
+    }
+    /* Ajustamos los márgenes internos de los textos */
+    .display-5 {
+        font-size: 1.7rem;
+        margin-bottom: 0.5rem; /* Pegamos un poco más el subtítulo al título */
+    }
+
+    .texto-contacto {
+        font-size: 0.9rem;
+        padding: 0 10px; /* Evita que el texto toque los bordes de la pantalla */
     }
 }
 
@@ -1462,10 +1663,26 @@ p, .p-design   { font-size: var(--fs-p); color: var(--B700); }
     letter-spacing: 0.5px;
 }
 
-/* Adaptación para que en móvil no se vea gigante */
 @media (max-width: 991px) {
     .main-footer {
-        padding: 30px 10px 20px 10px;
-        border-top-width: 15px; /* Borde un poco más delgado en móvil */
+        padding: 20px 2px 1px;
+        text-align: center;
+    }
+
+    .main-footer .row > div {
+        margin-bottom: 15px !important;
+    }
+    
+    .footer-social-links {
+        justify-content: center;
+        gap: 10px;    
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .main-footer ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
     }
 }
