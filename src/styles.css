@@ -1005,54 +1005,62 @@ section {
   opacity: 0.7;
   transform: scale(1);
 }
-
 @media (max-width: 768px) {
-  .video-carousel {
-    padding-top: 4rem !important;
-    padding-bottom: 0rem !important;
-  }
-
   .carousel-wrapper {
-    flex-direction: row;        /* Cambiamos de column a row para el swipe */
-    overflow-x: auto;           /* Habilitamos el scroll horizontal */
-    scroll-snap-type: x mandatory; /* El video se "pega" al centro al soltar */
-    gap: 15px;
-    padding-left: 10vw;  
-    padding-right: 10vw;          /* Espacio a los lados para ver los bordes de los otros videos */
-    justify-content: flex-start; /* Alineación inicial necesaria para el scroll */
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  /* Ocultamos la barra de scroll para que se vea limpio */
-  .carousel-wrapper::-webkit-scrollbar {
-    display: none;
+    gap: 0;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    overflow: hidden;
+    touch-action: pan-y;
+    position: relative;
   }
 
   .video-item {
-    width: 80vw;               /* El video ocupa el 80% del ancho de pantalla */
-    flex-shrink: 0;            /* Evita que los videos se encojan */
-    scroll-snap-align: center; /* Alinea el video al centro de la pantalla */
-    aspect-ratio: 9 / 16;
-    height: auto;
-    
-    /* Reseteamos los efectos de escritorio que no queremos en móvil */
-    transform: scale(0.9) !important; 
-    opacity: 0.6 !important;   /* Los que no están centrados se ven opacos */
-    filter: none !important;
-    display: block !important; /* IMPORTANTE: Volvemos a mostrar los .side */
+    width: 60vw;
+    height: calc(60vw * 1.77);
+    flex-shrink: 0;
+    margin: 0 -8px;
+    cursor: default;
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s ease,
+      filter 0.4s ease;
   }
 
-  /* El video que está "activo" o centrado */
-  /* Nota: Para que esto sea automático mientras scrolleas sin JS, 
-     necesitarás el IntersectionObserver que te pasé antes */
   .video-item.center {
-    transform: scale(1) !important;
-    opacity: 1 !important;
-    border: none;
+    transform: translateX(var(--offset, 0px)) scale(1);
+    z-index: 2;
+  }
+
+  .video-item.side {
+    transform: translateX(var(--offset, 0px)) scale(0.85);
+    opacity: 0.4;
+    filter: grayscale(40%);
+    pointer-events: none;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+  }
+
+  .carousel-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bs-border-color);
+    transition: all 0.3s;
+  }
+
+  .carousel-dots .dot.active {
+    width: 18px;
+    border-radius: 3px;
+    background: var(--P300);
   }
 }
-
 /* ==========================================================================
    Seccion Planes
    ==========================================================================

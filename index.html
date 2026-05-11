@@ -815,7 +815,6 @@
               ></video>
             </div>
           </div>
-
           <div class="controls-container text-center mt-3">
             <button id="mute-toggle" class="btn btn-outline-dark">
               <span id="mute-icon">🔇</span> Quitar Silencio
@@ -1172,19 +1171,96 @@
       /**
        * 4. Videos Movil
        */
+      // ─── DESKTOP ────────────────────────────────────────────────
+      if (!isMobile) {
+        // Limpiar cualquier offset residual del CSS mobile
+        items.forEach((item) => {
+          item.style.removeProperty("--offset");
+          item.style.removeProperty("z-index");
+        });
+
+        // Arrancar el video central
+        const initial = document.querySelector(".video-item.center video");
+        if (initial) {
+          initial.loop = true;
+          initial.play();
+        }
+
+        items.forEach((item) => {
+          item.addEventListener("click", () => {
+            if (item.classList.contains("center")) return;
+
+            const currentCenter = document.querySelector(".video-item.center");
+            const currentVideo = currentCenter.querySelector("video");
+            const newVideo = item.querySelector("video");
+
+            // Pausar el actual
+            currentVideo.pause();
+            currentVideo.currentTime = 0;
+
+            // Intercambiar clases
+            currentCenter.classList.remove("center");
+            currentCenter.classList.add("side");
+
+            item.classList.remove("side");
+            item.classList.add("center");
+
+            // Reproducir el nuevo
+            newVideo.loop = true;
+            newVideo.play();
+          });
+        });
+      }
+
+      // ─── MOBILE ─────────────────────────────────────────────────
       if (isMobile) {
         const videos = document.querySelectorAll(".video-item video");
         let currentIndex = 1;
+        let startX = 0;
+        let isPaused = false;
+
+        // --- Dots ---
+        const dotsContainer = document.createElement("div");
+        dotsContainer.className = "carousel-dots";
+        items.forEach((_, i) => {
+          const dot = document.createElement("span");
+          dot.className = "dot" + (i === currentIndex ? " active" : "");
+          dotsContainer.appendChild(dot);
+        });
+        document
+          .querySelector(".carousel-container")
+          .insertBefore(
+            dotsContainer,
+            document.querySelector(".controls-container"),
+          );
+
+        function updateDots() {
+          dotsContainer.querySelectorAll(".dot").forEach((d, i) => {
+            d.classList.toggle("active", i === currentIndex);
+          });
+        }
+
+        function centerItems(activeIndex) {
+          const wrapper = document.querySelector(".carousel-wrapper");
+          const wrapperWidth = wrapper.offsetWidth;
+          const activeItem = items[activeIndex];
+          const itemWidth = activeItem.offsetWidth;
+          const wrapperCenter = wrapperWidth / 2;
+          const itemCenter = activeItem.offsetLeft + itemWidth / 2;
+          const offset = wrapperCenter - itemCenter;
+
+          items.forEach((item) => {
+            item.style.setProperty("--offset", offset + "px");
+          });
+        }
 
         function setActive(index) {
+          currentIndex = index;
+
           items.forEach((item, i) => {
             item.classList.remove("center", "side");
-
-            if (i === index) {
-              item.classList.add("center");
-            } else {
-              item.classList.add("side");
-            }
+            item.classList.add(i === index ? "center" : "side");
+            item.style.zIndex = i === index ? "2" : "1";
           });
 
           videos.forEach((vid) => {
@@ -1192,48 +1268,70 @@
             vid.currentTime = 0;
           });
 
+          isPaused = false;
           videos[index].play();
+          updateDots();
+          centerItems(index);
         }
 
-        // iniciar
-        setActive(currentIndex);
-
-        // loop automático
-        videos.forEach((video, index) => {
-          video.addEventListener("ended", () => {
-            if (index === currentIndex) {
-              currentIndex = (currentIndex + 1) % items.length;
-              setActive(currentIndex);
+        // --- Tap sobre el video central: pausar / reproducir ---
+        items.forEach((item) => {
+          item.addEventListener("click", () => {
+            if (!item.classList.contains("center")) return;
+            const vid = videos[currentIndex];
+            if (isPaused) {
+              vid.play();
+              isPaused = false;
+            } else {
+              vid.pause();
+              isPaused = true;
             }
           });
         });
+
+        // --- Swipe táctil ---
+        const wrapper = document.querySelector(".carousel-wrapper");
+
+        wrapper.addEventListener(
+          "touchstart",
+          (e) => {
+            startX = e.touches[0].clientX;
+          },
+          { passive: true },
+        );
+
+        wrapper.addEventListener("touchend", (e) => {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            const dir = diff > 0 ? 1 : -1;
+            setActive((currentIndex + dir + items.length) % items.length);
+          }
+        });
+
+        // --- Avance automático al terminar ---
+        videos.forEach((video, index) => {
+          video.addEventListener("ended", () => {
+            if (index === currentIndex) {
+              setActive((currentIndex + 1) % items.length);
+            }
+          });
+        });
+
+        setActive(currentIndex);
       }
+
+      // ─── MUTE (compartido desktop + mobile) ─────────────────────
       document.addEventListener("DOMContentLoaded", () => {
         const videos = document.querySelectorAll(".video-item video");
         const muteBtn = document.getElementById("mute-toggle");
         const muteIcon = document.getElementById("mute-icon");
 
-        // 1. Play/Pause al hacer clic
-        videos.forEach((video) => {
-          video.addEventListener("click", () => {
-            if (video.paused) {
-              video.play();
-            } else {
-              video.pause();
-            }
-          });
-        });
-
-        // 2. Control de Audio Global
         muteBtn.addEventListener("click", () => {
           let isMuted = false;
-
           videos.forEach((video) => {
             video.muted = !video.muted;
             isMuted = video.muted;
           });
-
-          // Actualizar interfaz del botón
           muteIcon.textContent = isMuted ? "🔇" : "🔊";
           muteBtn.textContent = isMuted ? " Quitar Silencio" : " Silenciar";
           muteBtn.prepend(muteIcon);
