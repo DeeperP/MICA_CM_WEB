@@ -775,50 +775,49 @@
         </div>
       </section>
 
-      <!-- Seccion Carrucel TikTok -->
       <section class="video-carousel" id="tiktok-section">
-        <div class="text-center" id="titulo-tiktok">
-          <h2 class="titulo-seccion">Casos de Éxito</h2>
+        <div class="text-center mb-5 py-5" id="titulo-tiktok">
+          <h2 class="titulo-seccion">Conoce Nuestro Trabajo</h2>
           <h6 class="texto-seccion">
-            Historias reales de marcas que transformaron su presencia digital
+            Contenido dinámico diseñado para conectar marcas con sus audiencias.
           </h6>
         </div>
+        
+        <div class="filters" id="filterBar">
+          <button class="f-btn active" data-filter="all">Todos</button>
+          <button class="f-btn" data-filter="marca">Marca</button>
+          <button class="f-btn" data-filter="lifestyle">Lifestyle</button>
+          <button class="f-btn" data-filter="promo">Promo</button>
+          <button class="f-btn" data-filter="tutorial">Tutorial</button>
+        </div>
 
-        <div class="carousel-container">
-          <div
-            class="carousel-wrapper d-flex justify-content-center align-items-center"
-          >
-            <div class="video-item side" data-index="0">
-              <video
-                src="assets/videos/video2.MOV"
-                muted
-                playsinline
-                loop
-              ></video>
-            </div>
-
-            <div class="video-item center" data-index="1">
-              <video
-                src="assets/videos/video1.MOV"
-                muted
-                playsinline
-                loop
-              ></video>
-            </div>
-
-            <div class="video-item side" data-index="2">
-              <video
-                src="assets/videos/video3.mp4"
-                muted
-                playsinline
-                loop
-              ></video>
-            </div>
+        <div class="grid-wrap">
+          <div class="container-fluid px-0">
+            <div
+              class="row g-3 g-md-4 justify-content-center"
+              id="videoGrid"
+              style="max-width: 1200px; margin: 0 auto"
+            ></div>
           </div>
-          <div class="controls-container text-center mt-3">
-            <button id="mute-toggle" class="btn btn-outline-dark">
-              <span id="mute-icon">🔇</span> Quitar Silencio
-            </button>
+        </div>
+
+        <!-- MODAL — proporcional, SIN fullscreen -->
+        <div class="modal-bg" id="modal">
+          <div class="modal-box">
+            <button class="m-close" id="mClose">✕</button>
+            <div class="modal-vid-side">
+              <div class="modal-vid-inner" id="mVid"></div>
+            </div>
+            <div class="modal-info">
+              <div class="m-cat" id="mCat"></div>
+              <div class="m-title" id="mTitle"></div>
+              <div class="m-desc" id="mDesc"></div>
+              <div class="m-stats" id="mStats"></div>
+              <div class="m-nav">
+                <button id="mPrev">← Anterior</button>
+                <button id="mNext">Siguiente →</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -832,11 +831,10 @@
 
         <div class="container relative-content">
           <div class="text-center mb-5 py-5">
-            <h2 class="fw-bold display-5 titulo-seccion">
-              Conoce nuestro trabajo
-            </h2>
+            <h2 class="fw-bold display-5 titulo-seccion">Trabajemos Juntos</h2>
             <h6 class="text-muted texto-seccion">
-              Historias reales de marcas que transformaron su presencia digital
+              Elegí el nivel de gestión que tu marca necesita para empezar a
+              brillar en redes.
             </h6>
           </div>
 
@@ -957,9 +955,10 @@
 
         <div class="container relative-content text-center text-white">
           <div class="text-center mb-5 py-5">
-            <h2 class="fw-bold display-5 py-2">Conoce nuestro trabajo</h2>
+            <h2 class="fw-bold display-5 py-2">Da el primer paso hoy</h2>
             <h6 class="text-muted texto-contacto">
-              Historias reales de marcas que transformaron su presencia digital
+              El éxito de tu comunidad empieza con un "hola". Escribime y
+              despejá todas tus dudas.
             </h6>
           </div>
 
@@ -1057,287 +1056,7 @@
         </div>
       </div>
     </footer>
-    <script>
-      /**
-       * 1. LÓGICA DE PANELES Y DOTS
-       */
-      function openPanel(index) {
-        document
-          .querySelectorAll(".panel")
-          .forEach((p, i) => p.classList.toggle("open", i === index));
-        document
-          .querySelectorAll(".dot")
-          .forEach((d, i) => d.classList.toggle("active", i === index));
-      }
-      /**
-       * 2. STACK DE PLANES (MÓVIL / SWIPE)
-       */
-      const stack = document.getElementById("planesStack");
-      let touchStartX = 0;
-      let touchEndX = 0;
-
-      if (stack) {
-        stack.addEventListener(
-          "touchstart",
-          (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-          },
-          { passive: true },
-        );
-
-        stack.addEventListener(
-          "touchend",
-          (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-          },
-          { passive: true },
-        );
-      }
-
-      function handleSwipe() {
-        const swipeThreshold = 50;
-        const wrappers = document.querySelectorAll(".plan-card-wrapper");
-        let currentIndex = Array.from(wrappers).findIndex((w) =>
-          w.classList.contains("active"),
-        );
-
-        if (touchStartX - touchEndX > swipeThreshold) {
-          // Swipe Izquierda -> Siguiente
-          let nextIndex = (currentIndex + 1) % wrappers.length;
-          selectCard(wrappers[nextIndex]);
-        } else if (touchEndX - touchStartX > swipeThreshold) {
-          // Swipe Derecha -> Anterior
-          let prevIndex =
-            (currentIndex - 1 + wrappers.length) % wrappers.length;
-          selectCard(wrappers[prevIndex]);
-        }
-      }
-
-      // Función única selectCard para el stack de planes
-      function selectCard(element) {
-        if (window.innerWidth < 992) {
-          const wrappers = document.querySelectorAll(".plan-card-wrapper");
-
-          if (element.classList.contains("active")) return;
-
-          wrappers.forEach((card) => card.classList.remove("active"));
-          element.classList.add("active");
-
-          if (window.navigator.vibrate) window.navigator.vibrate(20);
-        }
-      }
-
-      /* CARRUCEL DE VIDEOS*/
-      const items = document.querySelectorAll(".video-item");
-      const isMobile = window.innerWidth <= 768;
-
-      /**
-       * 3. Videos Desktop
-       */
-      if (!isMobile) {
-        const initial = document.querySelector(".video-item.center video");
-        if (initial) {
-          initial.loop = true;
-          initial.play();
-        }
-      }
-      if (!isMobile) {
-        items.forEach((item) => {
-          item.addEventListener("click", () => {
-            if (item.classList.contains("center")) return;
-
-            const currentCenter = document.querySelector(".video-item.center");
-            const currentVideo = currentCenter.querySelector("video");
-            const newVideo = item.querySelector("video");
-
-            // Pausar actual
-            currentVideo.pause();
-            currentVideo.currentTime = 0;
-
-            // Cambiar clases
-            currentCenter.classList.remove("center");
-            currentCenter.classList.add("side");
-
-            item.classList.remove("side");
-            item.classList.add("center");
-
-            newVideo.loop = true;
-            newVideo.play();
-          });
-        });
-      }
-
-      /**
-       * 4. Videos Movil
-       */
-      // ─── DESKTOP ────────────────────────────────────────────────
-      if (!isMobile) {
-        // Limpiar cualquier offset residual del CSS mobile
-        items.forEach((item) => {
-          item.style.removeProperty("--offset");
-          item.style.removeProperty("z-index");
-        });
-
-        // Arrancar el video central
-        const initial = document.querySelector(".video-item.center video");
-        if (initial) {
-          initial.loop = true;
-          initial.play();
-        }
-
-        items.forEach((item) => {
-          item.addEventListener("click", () => {
-            if (item.classList.contains("center")) return;
-
-            const currentCenter = document.querySelector(".video-item.center");
-            const currentVideo = currentCenter.querySelector("video");
-            const newVideo = item.querySelector("video");
-
-            // Pausar el actual
-            currentVideo.pause();
-            currentVideo.currentTime = 0;
-
-            // Intercambiar clases
-            currentCenter.classList.remove("center");
-            currentCenter.classList.add("side");
-
-            item.classList.remove("side");
-            item.classList.add("center");
-
-            // Reproducir el nuevo
-            newVideo.loop = true;
-            newVideo.play();
-          });
-        });
-      }
-
-      // ─── MOBILE ─────────────────────────────────────────────────
-      if (isMobile) {
-        const videos = document.querySelectorAll(".video-item video");
-        let currentIndex = 1;
-        let startX = 0;
-        let isPaused = false;
-
-        // --- Dots ---
-        const dotsContainer = document.createElement("div");
-        dotsContainer.className = "carousel-dots";
-        items.forEach((_, i) => {
-          const dot = document.createElement("span");
-          dot.className = "dot" + (i === currentIndex ? " active" : "");
-          dotsContainer.appendChild(dot);
-        });
-        document
-          .querySelector(".carousel-container")
-          .insertBefore(
-            dotsContainer,
-            document.querySelector(".controls-container"),
-          );
-
-        function updateDots() {
-          dotsContainer.querySelectorAll(".dot").forEach((d, i) => {
-            d.classList.toggle("active", i === currentIndex);
-          });
-        }
-
-        function centerItems(activeIndex) {
-          const wrapper = document.querySelector(".carousel-wrapper");
-          const wrapperWidth = wrapper.offsetWidth;
-          const activeItem = items[activeIndex];
-          const itemWidth = activeItem.offsetWidth;
-          const wrapperCenter = wrapperWidth / 2;
-          const itemCenter = activeItem.offsetLeft + itemWidth / 2;
-          const offset = wrapperCenter - itemCenter;
-
-          items.forEach((item) => {
-            item.style.setProperty("--offset", offset + "px");
-          });
-        }
-
-        function setActive(index) {
-          currentIndex = index;
-
-          items.forEach((item, i) => {
-            item.classList.remove("center", "side");
-            item.classList.add(i === index ? "center" : "side");
-            item.style.zIndex = i === index ? "2" : "1";
-          });
-
-          videos.forEach((vid) => {
-            vid.pause();
-            vid.currentTime = 0;
-          });
-
-          isPaused = false;
-          videos[index].play();
-          updateDots();
-          centerItems(index);
-        }
-
-        // --- Tap sobre el video central: pausar / reproducir ---
-        items.forEach((item) => {
-          item.addEventListener("click", () => {
-            if (!item.classList.contains("center")) return;
-            const vid = videos[currentIndex];
-            if (isPaused) {
-              vid.play();
-              isPaused = false;
-            } else {
-              vid.pause();
-              isPaused = true;
-            }
-          });
-        });
-
-        // --- Swipe táctil ---
-        const wrapper = document.querySelector(".carousel-wrapper");
-
-        wrapper.addEventListener(
-          "touchstart",
-          (e) => {
-            startX = e.touches[0].clientX;
-          },
-          { passive: true },
-        );
-
-        wrapper.addEventListener("touchend", (e) => {
-          const diff = startX - e.changedTouches[0].clientX;
-          if (Math.abs(diff) > 40) {
-            const dir = diff > 0 ? 1 : -1;
-            setActive((currentIndex + dir + items.length) % items.length);
-          }
-        });
-
-        // --- Avance automático al terminar ---
-        videos.forEach((video, index) => {
-          video.addEventListener("ended", () => {
-            if (index === currentIndex) {
-              setActive((currentIndex + 1) % items.length);
-            }
-          });
-        });
-
-        setActive(currentIndex);
-      }
-
-      // ─── MUTE (compartido desktop + mobile) ─────────────────────
-      document.addEventListener("DOMContentLoaded", () => {
-        const videos = document.querySelectorAll(".video-item video");
-        const muteBtn = document.getElementById("mute-toggle");
-        const muteIcon = document.getElementById("mute-icon");
-
-        muteBtn.addEventListener("click", () => {
-          let isMuted = false;
-          videos.forEach((video) => {
-            video.muted = !video.muted;
-            isMuted = video.muted;
-          });
-          muteIcon.textContent = isMuted ? "🔇" : "🔊";
-          muteBtn.textContent = isMuted ? " Quitar Silencio" : " Silenciar";
-          muteBtn.prepend(muteIcon);
-        });
-      });
-    </script>
+    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

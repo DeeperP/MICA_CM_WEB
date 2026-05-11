@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Videos · Micaela Coria</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #0d0d0d;
+        --surface: #141414;
+        --card: #181818;
+        --border: rgba(255, 255, 255, 0.07);
+        --accent: #c9a96e;
+        --accent2: #e8d5b0;
+        --text: #f2ede6;
+        --muted: #7a7167;
+        --tag-bg: rgba(201, 169, 110, 0.12);
+        --radius: 12px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.6;
+      }
+
+      /* FILTERS */
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 0 20px 48px;
+        position: relative;
+        z-index: 1;
+      }
+      .f-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 7px 18px;
+        border-radius: 99px;
+        cursor: pointer;
+        transition: all 0.22s;
+      }
+      .f-btn:hover {
+        border-color: rgba(201, 169, 110, 0.4);
+        color: var(--accent2);
+      }
+      .f-btn.active {
+        background: var(--tag-bg);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* GRID */
+      .grid-wrap {
+        padding: 0 16px 80px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* CARD */
+      .v-col {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.45s ease forwards;
+      }
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .v-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          transform 0.25s,
+          box-shadow 0.25s;
+      }
+      .v-card:hover {
+        border-color: rgba(201, 169, 110, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5);
+      }
+      .v-ratio {
+        position: relative;
+        width: 100%;
+        padding-top: 177.78%;
+        background: #000;
+        overflow: hidden;
+      }
+      .v-ratio video,
+      .v-ratio .v-placeholder {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .v-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .v-play-ring {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 1px solid rgba(201, 169, 110, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .v-play-ring svg {
+        fill: var(--accent);
+        width: 18px;
+        margin-left: 3px;
+      }
+      .v-hover-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(10, 8, 5, 0.82) 0%,
+          rgba(10, 8, 5, 0.1) 55%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.28s;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 18px;
+      }
+      .v-card:hover .v-hover-overlay {
+        opacity: 1;
+      }
+      .v-hover-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 400;
+        color: var(--text);
+        line-height: 1.25;
+        margin-bottom: 6px;
+      }
+      .v-hover-tag {
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .v-meta {
+        padding: 14px 16px 16px;
+        border-top: 1px solid var(--border);
+      }
+      .v-cat {
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+      .v-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--text);
+        line-height: 1.3;
+        margin-bottom: 8px;
+      }
+      .v-stats {
+        display: flex;
+        gap: 14px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .v-stats span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .v-stats svg {
+        width: 11px;
+        fill: var(--muted);
+      }
+
+      /* MODAL — no fullscreen */
+      .modal-bg {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 4, 3, 0.88);
+        backdrop-filter: blur(10px);
+        z-index: 9000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-bg.open {
+        display: flex;
+      }
+      .modal-box {
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 760px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        animation: mIn 0.3s ease;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+      }
+      @keyframes mIn {
+        from {
+          opacity: 0;
+          transform: scale(0.93) translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .modal-vid-side {
+        flex: 0 0 auto;
+        width: min(54%, 320px);
+        position: relative;
+        background: #000;
+      }
+      .modal-vid-inner {
+        position: relative;
+        width: 100%;
+        padding-top: 177.78%;
+      }
+      .modal-vid-inner video,
+      .modal-vid-inner iframe,
+      .modal-vid-inner .v-placeholder {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+      }
+      .modal-info {
+        flex: 1 1 auto;
+        padding: 28px 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .m-cat {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .m-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+        color: var(--text);
+      }
+      .m-desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .m-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: auto;
+      }
+      .m-stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: var(--muted);
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .m-stat:last-child {
+        border-bottom: none;
+      }
+      .m-stat strong {
+        color: var(--text);
+        font-weight: 500;
+        font-size: 0.88rem;
+      }
+      .m-stat-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .m-stat-label svg {
+        width: 11px;
+        fill: var(--muted);
+      }
+      .m-nav {
+        display: flex;
+        gap: 8px;
+        padding-top: 8px;
+      }
+      .m-nav button {
+        flex: 1;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        padding: 9px 0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .m-nav button:hover {
+        border-color: rgba(201, 169, 110, 0.4);
+        color: var(--accent);
+      }
+      .m-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        border: none;
+        color: var(--muted);
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        z-index: 10;
+      }
+      .m-close:hover {
+        background: rgba(201, 169, 110, 0.15);
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        .modal-box {
+          flex-direction: column;
+          max-width: 360px;
+        }
+        .modal-vid-side {
+          width: 100%;
+        }
+        .modal-info {
+          padding: 20px 18px;
+        }
+      }
+
+      /* FOOTER */
+      .footer {
+        border-top: 1px solid var(--border);
+        padding: 26px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+      }
+      .footer-brand {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .footer-brand span {
+        color: var(--accent);
+      }
+      .footer-copy {
+        font-size: 0.72rem;
+        color: var(--muted);
+        opacity: 0.6;
+      }
+      @media (max-width: 480px) {
+        .footer {
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+        }
+        .nav-bar {
+          padding: 18px 20px;
+        }
+        .hero {
+          padding: 52px 20px 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="filters" id="filterBar">
+        <button class="f-btn active" data-filter="all">Todos</button>
+        <button class="f-btn" data-filter="marca">Marca</button>
+        <button class="f-btn" data-filter="lifestyle">Lifestyle</button>
+        <button class="f-btn" data-filter="promo">Promo</button>
+        <button class="f-btn" data-filter="tutorial">Tutorial</button>
+      </div>
+
+      <div class="grid-wrap">
+        <div class="container-fluid px-0">
+          <div
+            class="row g-3 g-md-4 justify-content-center"
+            id="videoGrid"
+            style="max-width: 1200px; margin: 0 auto"
+          ></div>
+        </div>
+      </div>
+
+      <!-- MODAL — proporcional, SIN fullscreen -->
+      <div class="modal-bg" id="modal">
+        <div class="modal-box">
+          <button class="m-close" id="mClose">✕</button>
+          <div class="modal-vid-side">
+            <div class="modal-vid-inner" id="mVid"></div>
+          </div>
+          <div class="modal-info">
+            <div class="m-cat" id="mCat"></div>
+            <div class="m-title" id="mTitle"></div>
+            <div class="m-desc" id="mDesc"></div>
+            <div class="m-stats" id="mStats"></div>
+            <div class="m-nav">
+              <button id="mPrev">← Anterior</button>
+              <button id="mNext">Siguiente →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-brand">Micaela <span>Coria</span> · CM</div>
+      <div class="footer-copy">© 2026 · Todos los derechos reservados</div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ================================================================
+   DATOS — Completá src con tus URLs de video (.mp4) o embed TikTok
+   type: "video" | "tiktok"
+================================================================ */
+      const videos = [
+        {
+          id: 1,
+          category: "marca",
+          title: "Lanzamiento nueva colección",
+          desc: "Presentación de producto con storytelling visual y transiciones suaves.",
+          views: "124K",
+          likes: "8.2K",
+          duration: "0:22",
+          type: "video",
+          src: "assets/videos/video3.mp4",
+          thumb: "assets/frames/fotograma-3.png",
+          bg: "linear-gradient(160deg,#1a0f0a,#090605)",
+        },
+        {
+          id: 2,
+          category: "lifestyle",
+          title: "Día en la vida de una CM",
+          desc: "Contenido auténtico mostrando el proceso detrás de cámara.",
+          views: "89K",
+          likes: "6.1K",
+          duration: "0:35",
+          type: "video",
+          src: "assets/videos/video2.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#0a0f1a,#050608)",
+        },
+        {
+          id: 3,
+          category: "promo",
+          title: "Oferta especial 3×2",
+          desc: "Pieza de conversión con urgencia visual y llamada a la acción clara.",
+          views: "210K",
+          likes: "15K",
+          duration: "0:18",
+          type: "video",
+          src: "assets/videos/video3.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#0f1a0a,#070a06)",
+        },
+        {
+          id: 4,
+          category: "tutorial",
+          title: "Cómo armar tu feed en 5 pasos",
+          desc: "Serie educativa que posiciona a la marca como referente del nicho.",
+          views: "67K",
+          likes: "4.8K",
+          duration: "0:58",
+          type: "video",
+          src: "assets/videos/video4.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#1a170a,#090806)",
+        },
+        {
+          id: 5,
+          category: "lifestyle",
+          title: "Behind the scenes del shooting",
+          desc: "Backstage que humaniza la marca y genera confianza en la audiencia.",
+          views: "53K",
+          likes: "3.9K",
+          duration: "0:29",
+          type: "video",
+          src: "assets/videos/video5.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#0a1518,#050809)",
+        },
+        {
+          id: 6,
+          category: "marca",
+          title: "Presentación de producto héroe",
+          desc: "Video de producto con énfasis en texturas, uso y diferenciadores.",
+          views: "178K",
+          likes: "12K",
+          duration: "0:24",
+          type: "video",
+          src: "path/to/video6.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#18090e,#090407)",
+        },
+        {
+          id: 7,
+          category: "tutorial",
+          title: "Tutorial de edición rápida",
+          desc: "Tips de edición en formato reel: dinámico, rápido y lleno de valor.",
+          views: "45K",
+          likes: "3.1K",
+          duration: "1:02",
+          type: "video",
+          src: "path/to/video7.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#0e0a1a,#060508)",
+        },
+        {
+          id: 8,
+          category: "promo",
+          title: "Promo temporada verano",
+          desc: "Campaña estacional con paleta cálida y alto ritmo de cortes.",
+          views: "302K",
+          likes: "22K",
+          duration: "0:15",
+          type: "video",
+          src: "path/to/video8.mp4",
+          thumb: "",
+          bg: "linear-gradient(160deg,#1a130a,#090705)",
+        },
+      ];
+
+      const playSvg = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+      const eyeSvg = `<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`;
+      const heartSvg = `<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+      const clockSvg = `<svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>`;
+
+      let currentFilter = "all",
+        currentIdx = 0;
+
+      function buildCard(v, i) {
+        const media = v.src
+          ? `<video src="${v.src}" preload="none" ${v.thumb ? `poster="${v.thumb}"` : ""}
+         playsinline muted loop></video>`
+          : `<div class="v-placeholder" style="background:${v.bg}">
+         <div class="v-play-ring">${playSvg}</div>
+         <span>${v.category}</span>
+       </div>`;
+        return `
+    <div class="col-6 col-sm-4 col-xl-3 v-col" style="animation-delay:${i * 60}ms" data-id="${v.id}">
+      <div class="v-card" onclick="openModal(${v.id})">
+        <div class="v-ratio">
+          ${media}
+          <div class="v-hover-overlay">
+            <div class="v-hover-title">${v.title}</div>
+            <div class="v-hover-tag">${v.category} · ${v.duration}</div>
+          </div>
+        </div>
+        <div class="v-meta">
+          <div class="v-cat">${v.category}</div>
+          <div class="v-title">${v.title}</div>
+          <div class="v-stats">
+            <span>${eyeSvg}${v.views}</span>
+            <span>${heartSvg}${v.likes}</span>
+            <span>${clockSvg}${v.duration}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+      }
+
+      function renderGrid(f) {
+        const list =
+          f === "all" ? videos : videos.filter((v) => v.category === f);
+        document.getElementById("videoGrid").innerHTML = list
+          .map((v, i) => buildCard(v, i))
+          .join("");
+      }
+      renderGrid("all");
+
+      document.getElementById("filterBar").addEventListener("click", (e) => {
+        const btn = e.target.closest(".f-btn");
+        if (!btn) return;
+        document
+          .querySelectorAll(".f-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderGrid(currentFilter);
+      });
+
+      /* Modal */
+      const modal = document.getElementById("modal");
+      const mVid = document.getElementById("mVid");
+
+      function openModal(id) {
+        currentIdx = videos.findIndex((v) => v.id === id);
+        loadModal(currentIdx);
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        modal.classList.remove("open");
+        mVid.innerHTML = "";
+        document.body.style.overflow = "";
+      }
+      function loadModal(idx) {
+        const v = videos[idx];
+        if (v.type === "tiktok" && v.src) {
+          mVid.innerHTML = `<iframe src="${v.src}" allowfullscreen allow="autoplay"></iframe>`;
+        } else if (v.src) {
+          mVid.innerHTML = `<video src="${v.src}" controls autoplay playsinline
+      ${v.thumb ? `poster="${v.thumb}"` : ""}
+      style="object-fit:contain;background:#000;"></video>`;
+        } else {
+          mVid.innerHTML = `<div class="v-placeholder" style="background:${v.bg}">
+      <div class="v-play-ring">${playSvg}</div>
+      <span style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Agregá tu video en <code style="color:var(--accent)">src</code></span>
+    </div>`;
+        }
+        document.getElementById("mCat").textContent = v.category.toUpperCase();
+        document.getElementById("mTitle").textContent = v.title;
+        document.getElementById("mDesc").textContent = v.desc || "";
+        document.getElementById("mStats").innerHTML = `
+    <div class="m-stat"><span class="m-stat-label">${eyeSvg} Reproducciones</span><strong>${v.views}</strong></div>
+    <div class="m-stat"><span class="m-stat-label">${heartSvg} Me gusta</span><strong>${v.likes}</strong></div>
+    <div class="m-stat"><span class="m-stat-label">${clockSvg} Duración</span><strong>${v.duration}</strong></div>
+  `.replace(/<svg/g, '<svg style="width:11px;fill:var(--muted)"');
+      }
+
+      document.getElementById("mClose").addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.getElementById("mPrev").addEventListener("click", () => {
+        currentIdx = (currentIdx - 1 + videos.length) % videos.length;
+        loadModal(currentIdx);
+      });
+      document.getElementById("mNext").addEventListener("click", () => {
+        currentIdx = (currentIdx + 1) % videos.length;
+        loadModal(currentIdx);
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!modal.classList.contains("open")) return;
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowLeft") document.getElementById("mPrev").click();
+        if (e.key === "ArrowRight") document.getElementById("mNext").click();
+      });
+    </script>
+  </body>
+</html>
